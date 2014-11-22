@@ -1,3 +1,4 @@
+# coding=utf-8
 """Provide a meta class implementing the Singleton pattern."""
 
 __author__ = 'sb'
@@ -7,8 +8,7 @@ class Singleton(type):
     """Singleton meta class.
 
     Usage:
-    class SomeClass(object):
-        __metaclass__ = Singleton
+    class SomeClass(object, metaclass=Singleton):
     """
     _instances = {}
 
