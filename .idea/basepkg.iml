@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/basepkg/meta" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/basepkg/tests" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="PackageRequirementsSettings">
+    <option name="requirementsPath" value="$MODULE_DIR$/req.txt" />
+  </component>
+  <component name="PyBDDFrameworkConfig">
+    <option name="preferedFrameworkName" value="behave" />
+  </component>
+  <component name="ReSTService">
+    <option name="workdir" value="$MODULE_DIR$/docs" />
+    <option name="DOC_DIR" value="$MODULE_DIR$/docs" />
+  </component>
+  <component name="TestRunnerService">
+    <option name="projectConfiguration" value="Nosetests" />
+    <option name="PROJECT_TEST_RUNNER" value="Nosetests" />
+  </component>
+</module>
