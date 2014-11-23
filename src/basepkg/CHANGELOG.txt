@@ -1,4 +1,6 @@
-Version 0.1
------------
+Version 0.1.0dev1
+-----------------
 
-    - Initial version.
+    - Initial experimental version.
+
+    - Provides singletons applicable via meta class or decorator.
