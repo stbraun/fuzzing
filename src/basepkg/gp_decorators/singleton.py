@@ -4,9 +4,13 @@ __author__ = 'sb'
 
 
 def singleton(cls):
-    """Create a singleton instance of cls."""
+    """Create a singleton instance of cls.
+    :param cls: class to instantiate.
+    """
     _instances = {}
+
     def get_instance(*args, **kwargs):
+        """Return the single instance of cls."""
         if cls not in _instances:
             _instances[cls] = cls(*args, **kwargs)
         return _instances[cls]
