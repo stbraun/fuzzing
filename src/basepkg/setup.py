@@ -24,20 +24,20 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.1.0"
+version = "0.1.1"
 
 setup(name="basepkg",
       version=version,
-      description="Some general meta classes.",
+      description="Some general gp_meta classes.",
       long_description=open("README.rst").read(),
       classifiers=[ # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
         'Development Status :: 1 - Planning',
         'Programming Language :: Python'
       ],
-      keywords="key word", # Separate with spaces
+      keywords="development tools", # Separate with spaces
       author="Stefan Braun",
       author_email="sb@action.ms",
-      url="http://homepage/url",
+      url="https://github.com/stbraun/basepkg",
       license="MIT",
       packages=find_packages(exclude=['examples', 'tests']),
       include_package_data=True,
@@ -50,6 +50,6 @@ setup(name="basepkg",
       # TODO: List executable scripts, provided by the package (this is just an example)
       entry_points={
         'console_scripts': 
-            ['basepkg=meta:main']
+            ['basepkg=gp_meta:main']
       }
 )
