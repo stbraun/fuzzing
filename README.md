@@ -3,7 +3,7 @@ Base Package
 
 This project provides simple generally applicable functions and classes for Python programs.
 
-Currently it consists of two packages:
+Currently it consists of following packages:
 
   * gp_meta: meta classes.
   * gp_decorators: decorators.
