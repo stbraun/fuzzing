@@ -7,6 +7,7 @@ Currently it consists of two packages:
 
   * gp_meta: meta classes.
   * gp_decorators: decorators.
+  * gp_tools: development tools.
 
 
 Copyright & License
