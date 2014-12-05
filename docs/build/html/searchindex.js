@@ -1,1 +1,1 @@
-Search.setIndex({terms:{index:0,modul:0,search:0,content:0,page:0},objnames:{},titleterms:{welcom:0,document:0,tabl:0,packag:0,base:0,indic:0},objtypes:{},envversion:43,titles:["Welcome to Base Package&#8217;s documentation!"],filenames:["index"],objects:{}})
+Search.setIndex({titleterms:{document:0,base:0,tabl:0,indic:0,welcom:0,packag:0},objects:{},objnames:{},terms:{index:0,page:0,search:0,content:0,modul:0},titles:["Welcome to Base Package&#8217;s documentation!"],envversion:47,filenames:["index"],objtypes:{}})
