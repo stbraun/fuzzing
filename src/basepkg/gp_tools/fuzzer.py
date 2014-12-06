@@ -25,25 +25,26 @@ def fuzz_string(seed_str, rounds=100, fuzz_factor=50):
     buf = bytearray(seed_str, encoding="utf8")
     variants = []
     for _ in range(rounds):
-        fuzzed = fuzzer(deepcopy(buf), fuzz_factor)
+        fuzzed = fuzzer(buf, fuzz_factor)
         variants.append(''.join([chr(b) for b in fuzzed]))
     return variants
 
 
-def fuzzer(buf, fuzz_factor=101):
+def fuzzer(buffer, fuzz_factor=101):
     """Charlie Miller's fuzzer code.
 
-    Takes a buffer of bytes and replaces some with random values.
+    Takes a buffer of bytes, creates a copy, and replaces some bytes with random values.
+    Number of bytes to modify depends on fuzz_factor.
 
-    :param buf: the data to fuzz.
-    :type buf: bytearray
+    :param buffer: the data to fuzz.
+    :type buffer: bytearray
     :param fuzz_factor: degree of fuzzing.
     :type fuzz_factor: int
     :return: fuzzed buffer
     :rtype: bytearray
     """
+    buf = deepcopy(buffer)
     num_writes = random.randrange(math.ceil((float(len(buf)) / fuzz_factor))) + 1
-
     for _ in range(num_writes):
         random_byte = random.randrange(256)
         random_position = random.randrange(len(buf))

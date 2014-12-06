@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/basepkg/gp_meta" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/basepkg/tests" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/basepkg/gp_decorators" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/basepkg/gp_tools" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

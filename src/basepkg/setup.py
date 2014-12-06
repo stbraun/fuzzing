@@ -42,7 +42,7 @@ setup(name="basepkg",
       packages=find_packages(exclude=['examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
-      tests_require=['pytest'],
+      tests_require=['pytest', 'behave'],
       cmdclass={'test': PyTest},
       
       # TODO: List of packages that this one depends upon:   
