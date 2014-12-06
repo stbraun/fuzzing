@@ -9,12 +9,13 @@ import math
 from copy import deepcopy
 
 seed_content = """A boring multiline string.
-making no sense at all.
+Just for demonstration; makes no sense at all.
 """
 
 
 def fuzz_string(seed_str, rounds=100, fuzz_factor=50):
     """A random fuzzer for a simulated text viewer application.
+
     :param seed_str: the string to use as seed for fuzzing.
     :param rounds: number of fuzzed variants to supply.
     :param fuzz_factor: degree of fuzzing = 1 / fuzz_factor
