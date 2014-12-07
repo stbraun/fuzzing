@@ -1,9 +1,9 @@
 # coding=utf-8
-"""Test Singleton meta class."""
+"""Test Singleton gp_meta class."""
 
 import unittest
 
-from meta.singleton import Singleton
+from gp_meta.singleton import Singleton
 
 
 CAROLINE = 'Caroline'

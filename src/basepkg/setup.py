@@ -1,4 +1,4 @@
-'''
+"""
 basepkg: Some general meta classes.
 
 Note that "python setup.py test" invokes pytest on the package. With appropriately
@@ -6,7 +6,7 @@ configured setup.cfg, this will check both xxx_test modules and docstrings.
 
 Copyright 2014, Stefan Braun.
 Licensed under MIT.
-'''
+"""
 import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
@@ -28,21 +28,21 @@ version = "0.1.0"
 
 setup(name="basepkg",
       version=version,
-      description="Some general meta classes.",
+      description="Some general gp_meta classes.",
       long_description=open("README.rst").read(),
-      classifiers=[ # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
+      classifiers=[  # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
         'Development Status :: 1 - Planning',
         'Programming Language :: Python'
       ],
-      keywords="key word", # Separate with spaces
+      keywords="development tools",  # Separate with spaces
       author="Stefan Braun",
       author_email="sb@action.ms",
-      url="http://homepage/url",
+      url="https://github.com/stbraun/basepkg",
       license="MIT",
       packages=find_packages(exclude=['examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
-      tests_require=['pytest'],
+      tests_require=['pytest', 'behave'],
       cmdclass={'test': PyTest},
       
       # TODO: List of packages that this one depends upon:   
@@ -50,6 +50,6 @@ setup(name="basepkg",
       # TODO: List executable scripts, provided by the package (this is just an example)
       entry_points={
         'console_scripts': 
-            ['basepkg=meta:main']
+            ['basepkg=gp_meta:main']
       }
 )

@@ -14,7 +14,7 @@ Installation
 
 The easiest way to install most Python packages is via ``easy_install`` or ``pip``::
 
-    $ easy_install basepkg
+    $ pip basepkg
 
 Usage
 -----

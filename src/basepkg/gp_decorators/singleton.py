@@ -5,7 +5,9 @@ __author__ = 'sb'
 
 def singleton(cls):
     """Create a singleton instance of cls.
+
     :param cls: class to instantiate.
+    :return: the single instance of cls.
     """
     _instances = {}
 

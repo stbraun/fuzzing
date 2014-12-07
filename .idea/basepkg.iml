@@ -2,9 +2,10 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/basepkg/meta" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/basepkg/gp_meta" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/basepkg/tests" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/basepkg/gp_decorators" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/basepkg/gp_tools" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
