@@ -3,11 +3,11 @@ Base Package
 
 This project provides simple generally applicable functions and classes for Python programs.
 
-Currently it consists of following packages:
+Currently it helps with:
 
-  * gp_meta: meta classes.
-  * gp_decorators: decorators.
-  * gp_tools: development tools.
+  * Declaration of a class as singleton simply using the ``@singleton`` decorator.
+  * Random testing of functions and applications.
+
 
 
 Copyright & License
