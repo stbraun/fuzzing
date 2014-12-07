@@ -8,10 +8,6 @@ import random
 import math
 from copy import deepcopy
 
-seed_content = """A boring multiline string.
-Just for demonstration; makes no sense at all.
-"""
-
 
 def fuzz_string(seed_str, rounds=100, fuzz_factor=50):
     """A random fuzzer for a simulated text viewer application.
@@ -50,10 +46,3 @@ def fuzzer(buffer, fuzz_factor=101):
         random_position = random.randrange(len(buf))
         buf[random_position] = random_byte
     return buf
-
-
-if __name__ == '__main__':
-    fuzzed_contents = fuzz_string(seed_content, 3, 5)
-    for fuzzed_content in fuzzed_contents:
-        print(fuzzed_content)
-        pass

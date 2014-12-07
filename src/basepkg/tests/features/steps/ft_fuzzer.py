@@ -3,7 +3,7 @@
 
 from behave import *
 
-import gp_tools.fuzzer as fuzzer
+from gp_tools.fuzzer import fuzzer, fuzz_string
 
 
 @given("a bytearray of len 10")
@@ -15,7 +15,7 @@ def step_impl(context):
 @when("feeding it into the fuzzer, setting the fuzz_factor to 10")
 def step_impl(context):
     """Execute fuzzer."""
-    context.fuzzed_buf = fuzzer.fuzzer(context.buf, 10)
+    context.fuzzed_buf = fuzzer(context.buf, 10)
 
 @then("it will return a buffer with up to two modified bytes.")
 def step_impl(context):
@@ -29,7 +29,7 @@ def step_impl(context):
 @when("feeding it into the fuzzer, setting the fuzz_factor to 1")
 def step_impl(context):
     """Execute fuzzer."""
-    context.fuzzed_buf = fuzzer.fuzzer(context.buf, 10)
+    context.fuzzed_buf = fuzzer(context.buf, 10)
 
 @then("it will return a buffer with up to 10 modified bytes.")
 def step_impl(context):
@@ -49,7 +49,7 @@ def step_impl(context):
 def step_impl(context):
     """Execute fuzzer."""
     fuzz_factor = 11
-    context.fuzzed_string_list = fuzzer.fuzz_string(context.seed, 5, fuzz_factor)
+    context.fuzzed_string_list = fuzz_string(context.seed, 5, fuzz_factor)
 
 @then("it will return a list of 5 fuzzed variants of the seed.")
 def step_impl(context):
