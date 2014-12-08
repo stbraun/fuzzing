@@ -42,8 +42,7 @@ def step_impl(context):
 @given("a string as seed.")
 def step_impl(context):
     """Provide a string."""
-    context.seed = """A test seed for our fuzz tester.
-                      Multiple lines are fine."""
+    context.seed = context.text
 
 @when("feeding the seed into the fuzzer, providing a count of 5")
 def step_impl(context):

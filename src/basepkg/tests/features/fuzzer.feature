@@ -20,5 +20,10 @@ Feature: Provide a fuzz tester
 
   Scenario: Create a list of fuzzed variants of a given string.
     Given a string as seed.
+      """
+      Create fuzzed variants of this string.
+      A test seed for our fuzz tester.
+      Multiple lines are fine.
+      """
     When feeding the seed into the fuzzer, providing a count of 5
     Then it will return a list of 5 fuzzed variants of the seed.
