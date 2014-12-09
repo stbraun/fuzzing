@@ -6,6 +6,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src/basepkg/tests" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/basepkg/gp_decorators" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/basepkg/gp_tools" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/basepkg/features/steps" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/eggs" />
+      <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
