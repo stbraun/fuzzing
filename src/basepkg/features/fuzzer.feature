@@ -18,12 +18,20 @@ Feature: Provide a fuzz tester
     When feeding it into the fuzzer, setting the fuzz_factor to 1
     Then it will return a buffer with up to 10 modified bytes.
 
-  Scenario: Create a list of fuzzed variants of a given string.
+
+  Scenario Outline: Create a list of fuzzed variants of a given string.
     Given a string as seed.
-      """
+    """
       Create fuzzed variants of this string.
       A test seed for our fuzz tester.
       Multiple lines are fine.
       """
-    When feeding the seed into the fuzzer, providing a count of 5
-    Then it will return a list of 5 fuzzed variants of the seed.
+    When feeding the seed into the fuzzer, providing a count of <count>
+    Then it will return a list of <len_list> fuzzed variants of the seed.
+
+    Examples:
+    | count | len_list |
+    |     0 |        0 |
+    |     1 |        1 |
+    |    11 |       11 |
+    |   101 |      101 |

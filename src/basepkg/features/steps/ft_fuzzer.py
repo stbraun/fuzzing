@@ -44,16 +44,16 @@ def step_impl(context):
     """Provide a string."""
     context.seed = context.text
 
-@when("feeding the seed into the fuzzer, providing a count of 5")
-def step_impl(context):
+@when("feeding the seed into the fuzzer, providing a count of {count:d}")
+def step_impl(context, count):
     """Execute fuzzer."""
     fuzz_factor = 11
-    context.fuzzed_string_list = fuzz_string(context.seed, 5, fuzz_factor)
+    context.fuzzed_string_list = fuzz_string(context.seed, count, fuzz_factor)
 
-@then("it will return a list of 5 fuzzed variants of the seed.")
-def step_impl(context):
+@then("it will return a list of {len_list:d} fuzzed variants of the seed.")
+def step_impl(context, len_list):
     """Check assertions."""
-    assert len(context.fuzzed_string_list) == 5
+    assert len(context.fuzzed_string_list) == len_list
     for fuzzed_string in context.fuzzed_string_list:
         assert len(context.seed) == len(fuzzed_string)
         count = number_of_modified_bytes(context.seed, fuzzed_string)
