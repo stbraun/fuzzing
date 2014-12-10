@@ -10,6 +10,8 @@ Licensed under MIT.
 import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
+from setuptools_behave import behave_test
+
 
 # This is a plug-in for setuptools that will invoke py.test
 # when you run python setup.py test
@@ -42,9 +44,11 @@ setup(name="basepkg",
       packages=find_packages(exclude=['examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
-      tests_require=['pytest', 'behave'],
-      cmdclass={'test': PyTest},
-      
+      tests_require=['pytest', 'behave>=1.2.4'],
+      cmdclass={'test': PyTest,
+                'behave_test': behave_test,
+                },
+
       # TODO: List of packages that this one depends upon:   
       install_requires=['sphinx'],
       # TODO: List executable scripts, provided by the package (this is just an example)
