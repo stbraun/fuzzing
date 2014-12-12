@@ -3,10 +3,10 @@
 
 from behave import *
 
-from gp_tools.fuzzer import fuzzer, fuzz_string
+from gp_tools.fuzzer import fuzzer, fuzz_string, FuzzExecutor
 
 
-@given("a bytearray of len 10")
+@given("a byte array of len 10")
 def step_impl(context):
     """Prepare a bytearray."""
     context.buf = bytearray(10)
@@ -23,20 +23,21 @@ def step_impl(context):
     assert len(context.buf) == len(context.fuzzed_buf)
     count = number_of_modified_bytes(context.buf, context.fuzzed_buf)
     assert count < 3
-    assert count > 0
+    assert count >= 0
 
 
-@when("feeding it into the fuzzer, setting the fuzz_factor to 1")
-def step_impl(context):
+@when("feeding it into the fuzzer, setting the fuzz_factor to {count:d}")
+def step_impl(context, count):
     """Execute fuzzer."""
-    context.fuzzed_buf = fuzzer(context.buf, 10)
+    context.fuzzed_buf = fuzzer(context.buf, count)
 
-@then("it will return a buffer with up to 10 modified bytes.")
-def step_impl(context):
+@then("it will return a buffer with up to {max_modified:d} modified bytes.")
+def step_impl(context, max_modified):
     """Check assertions."""
     assert len(context.buf) == len(context.fuzzed_buf)
     count = number_of_modified_bytes(context.buf, context.fuzzed_buf)
-    assert count > 0
+    assert count >= 0
+    assert count <= max_modified
 
 
 @given("a string as seed.")
@@ -57,10 +58,66 @@ def step_impl(context, len_list):
     for fuzzed_string in context.fuzzed_string_list:
         assert len(context.seed) == len(fuzzed_string)
         count = number_of_modified_bytes(context.seed, fuzzed_string)
-        assert count > 0
+        assert count >= 0
 
+# ## file fuzzer
+
+@given("a list of file paths")
+def step_impl(context):
+    """Create file list."""
+    assert context.table, "ENSURE: table is provided."
+    context.file_list = [row['file_path'] for row in context.table.rows]
+
+@given("a list of applications")
+def step_impl(context):
+    """Create application list."""
+    assert context.table, "ENSURE: table is provided."
+    context.app_list = [row['application'] for row in context.table.rows]
+
+@given("a FuzzExecutor instance created with those lists.")
+def step_impl(context):
+    """Create application list."""
+    assert context.app_list and len(context.app_list) > 0, "ENSURE: app list is provided."
+    assert context.file_list and len(context.file_list) > 0, "ENSURE: file list is provided."
+    context.fuzz_executor = FuzzExecutor(context.app_list, context.file_list)
+    assert context.fuzz_executor, "VERIFY: fuzz executor created."
+
+@when("running a test {runs:d} times")
+def step_impl(context, runs):
+    """Execute multiple runs."""
+    executor = context.fuzz_executor
+    executor.run_test(runs)
+    assert sum(executor.stats.values()) == runs, "VERIFY: stats available."
+
+@then("a randomly chosen application will be called with a randomly chosen file.")
+def step_impl(context):
+    """Check called apps / files."""
+    # TASK consider to improve test.
+    executor = context.fuzz_executor
+    pairs = executor.test_pairs
+    app_2_files = {}
+    for app, file in pairs:
+        if app not in app_2_files:
+            app_2_files[app] = []
+        if file not in app_2_files[app]:
+            app_2_files[app].append(file)
+    if len(pairs) > 10 and len(context.file_list) > 1:
+        multiple_files = False
+        for app, files in app_2_files.items():
+            multiple_files = context.file_list or len(files) > 0
+        assert multiple_files, "VERIFY: at least one app was tested with multiple files."
+
+
+@then("{runs:d} results are recorded.")
+def step_impl(context, runs):
+    """Check called apps / files."""
+    executor_ = context.fuzz_executor
+    assert sum(executor_.stats.values()) == runs, "VERIFY: Number of recorded runs."
+    for app, count in executor_.stats.items():
+        assert count > 0, "VERIFY: at least one test must have been performed and recorded."
 
 # ##### helpers
+
 
 def number_of_modified_bytes(buf, fuzzed_buf):
     """Determine the number of differing bytes.
