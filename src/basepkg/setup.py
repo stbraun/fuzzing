@@ -26,7 +26,7 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.1.0"
+version = "0.2.0"
 
 setup(name="basepkg",
       version=version,
