@@ -1,5 +1,5 @@
 # coding=utf-8
-"""Test steps for feature 'fuzzer'"""
+"""Test steps for feature 'fuzzer'."""
 
 from behave import *
 
