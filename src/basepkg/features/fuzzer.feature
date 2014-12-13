@@ -19,15 +19,15 @@ Feature: Provide a fuzz tester
 
   Scenario Outline: Fuzz a binary buffer with different numbers of modifications.
     Given a byte array of len 10
-    When feeding it into the fuzzer, setting the fuzz_factor to <count>
+    When feeding it into the fuzzer, setting the fuzz_factor to <fuzz_factor>
     Then it will return a buffer with up to <max_modified> modified bytes.
 
     Examples:
-    | count | max_modified |
-    |     1 |           10 |
-    |     5 |            3 |
-    |    11 |            2 |
-    |   101 |            2 |
+    | fuzz_factor | max_modified |
+    |           1 |           10 |
+    |           5 |            3 |
+    |          11 |            2 |
+    |         101 |            2 |
 
 
   Scenario Outline: Create a list of fuzzed variants of a given string.

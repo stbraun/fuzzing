@@ -17,6 +17,8 @@ import subprocess
 def fuzz_string(seed_str, runs=100, fuzz_factor=50):
     """A random fuzzer for a simulated text viewer application.
 
+    It takes a string as seed and generates <runs> variant of it.
+
     :param seed_str: the string to use as seed for fuzzing.
     :param runs: number of fuzzed variants to supply.
     :param fuzz_factor: degree of fuzzing = 1 / fuzz_factor.
@@ -32,17 +34,18 @@ def fuzz_string(seed_str, runs=100, fuzz_factor=50):
 
 
 def fuzzer(buffer, fuzz_factor=101):
-    """Charlie Miller's fuzzer code.
+    """Fuzz given buffer.
 
-    Takes a buffer of bytes, creates a copy, and replaces some bytes with random values.
+    Take a buffer of bytes, create a copy, and replace some bytes with random values.
     Number of bytes to modify depends on fuzz_factor.
+    This code is taken from Charlie Miller's fuzzer code.
 
     :param buffer: the data to fuzz.
-    :type buffer: bytearray
+    :type buffer: byte array
     :param fuzz_factor: degree of fuzzing.
     :type fuzz_factor: int
     :return: fuzzed buffer.
-    :rtype: bytearray
+    :rtype: byte array
     """
     buf = deepcopy(buffer)
     num_writes = random.randrange(math.ceil((float(len(buf)) / fuzz_factor))) + 1
@@ -97,7 +100,7 @@ class FuzzExecutor(object):
 
     @property
     def test_pairs(self):
-        """Retrieve list of last test run's (app, file) pairs.
+        """Retrieve (app, file) pair list of last test run.
 
         :return: (app, file) pairs of last run.
         :rtype: [(str, str)]
@@ -140,4 +143,3 @@ class FuzzExecutor(object):
             process.terminate()
             self.stats_[(app_name, 'succeeded')] += 1
         return True
-
