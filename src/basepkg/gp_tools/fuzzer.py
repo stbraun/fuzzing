@@ -127,6 +127,7 @@ class FuzzExecutor(object):
         """
         app_name = os.path.basename(app_)
         # TASK catch stderr of process and log it
+        # https://docs.python.org/3.4/library/subprocess.html?highlight=popen#subprocess.Popen.stderr
         process = subprocess.Popen([app_, file_])
 
         time.sleep(1)

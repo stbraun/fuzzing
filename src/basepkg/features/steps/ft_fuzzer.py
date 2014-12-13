@@ -107,7 +107,6 @@ def step_impl(context):
             multiple_files = context.file_list or len(files) > 0
         assert multiple_files, "VERIFY: at least one app was tested with multiple files."
 
-
 @then("{runs:d} results are recorded.")
 def step_impl(context, runs):
     """Check called apps / files."""
