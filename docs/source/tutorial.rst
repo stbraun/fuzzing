@@ -84,7 +84,7 @@ This is already good for robustness tests. In most cases you also want a kind
 of statistics and a documentation of the test cases resulting in an error.
 
 Generating test data
-....................
+____________________
 
 .. index:: Charlie Miller
 
@@ -98,7 +98,7 @@ ASCII texts, HTML, XML, JSON and other text based formats.
 ``gp_tools.fuzzer.fuzz_string()`` is a wrapper simplifying such use cases a bit.
 
 Example of a simple generator:
-..............................
+______________________________
 
 ::
 
@@ -113,7 +113,7 @@ Of course you can also create one fuzzed variant at a time and feed it directly 
 
 
 Calling the SUT with the test data
-..................................
+__________________________________
 
 How to call the SUT depends obviously from its type. A Python function can be called directly with the created
 data. It might make sense to enclose the call into a try / except block to catch errors. It is also easy to
@@ -129,7 +129,7 @@ information about the success or failure of the run. At least crashes are easily
 
 
 The oracle - or: How to evaluate the test result?
-.................................................
+_________________________________________________
 
 The function evaluating the result of a test run is called *oracle*. That's fine because the result
 is not always clear and understandable.
@@ -144,7 +144,7 @@ or a log file, we may be able to write parsers that enable us to look for failur
 
 
 Complete example:
-.................
+_________________
 
 The following sample code runs 100 tests against the applications listed in ``apps_under_test``.
 Test data is generated using a simple fuzzer on a set of files defines in ``file_list``.
@@ -225,3 +225,46 @@ Some of the code found in the ``fuzzer`` module is inlined for easier comprehens
         print(stats)
 
 
+
+Using FuzzExecutor
+__________________
+
+Fuzz testing applications using files can be used often because it is quite generic. Therefore
+it makes sense to encapsulate this functionality and make it easy to apply.
+
+The example above can be written much faster using the class ``FuzzExecutor``: ::
+
+    from gp_tools.fuzzer import FuzzExecutor
+
+    # Files to use as initial input seed.
+    file_list = ["./features/data/t1.pdf", "./features/data/t3.pdf", "./features/data/t2.jpg"]
+
+    # List of applications to test.
+    apps_under_test = ["/Applications/Adobe Reader 9/Adobe Reader.app/Contents/MacOS/AdobeReader",
+                       "/Applications/PDFpen 6.app/Contents/MacOS/PDFpen 6",
+                       "/Applications/Preview.app/Contents/MacOS/Preview",
+                       ]
+
+    number_of_runs = 13
+
+    def test():
+        fuzz_executor = FuzzExecutor(apps_under_test, file_list)
+        fuzz_executor.run_test(number_of_runs)
+        return fuzz_executor.stats
+
+    def main():
+        stats = test()
+        for k, v in stats.items():
+            print('{} = {}'.format(k, v))
+
+The property ``FuzzExecutor.stat`` is an instance of ``collections.Counter``. It holds the number
+of successful and failed runs for each application.
+
+Another property, ``FuzzExecutor.test_pairs``, provides a list of all test runs in
+form of (application, file) tuples.
+
+..  TODO - rewrite this after introducing logging.
+
+**Note:** When running a lot of tests this list might get too big. Then
+it is better to remove this feature. In a later release it may be replaced
+by logging mechanism.
