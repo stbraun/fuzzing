@@ -1,5 +1,5 @@
 # Created by sb at 06.12.14
-Feature: Provide a fuzz tester
+Feature: Provide a fuzz tester.
   A fuzz tester consists of a tests data generator,
   a driver feeding data to the SUT (Software Under Test),
   and an oracle detecting success or failure of a test run.
