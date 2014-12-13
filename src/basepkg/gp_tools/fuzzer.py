@@ -1,7 +1,7 @@
 # coding=utf-8
 """Fuzz testing module.
 
-A toolbox to create fuzzers for random testing of software.
+A Toolbox to create fuzzers for random testing of software.
 """
 
 import random
@@ -19,7 +19,7 @@ def fuzz_string(seed_str, runs=100, fuzz_factor=50):
 
     :param seed_str: the string to use as seed for fuzzing.
     :param runs: number of fuzzed variants to supply.
-    :param fuzz_factor: degree of fuzzing = 1 / fuzz_factor
+    :param fuzz_factor: degree of fuzzing = 1 / fuzz_factor.
     :return: list of fuzzed variants of seed_str.
     :rtype: [str]
     """
@@ -41,7 +41,7 @@ def fuzzer(buffer, fuzz_factor=101):
     :type buffer: bytearray
     :param fuzz_factor: degree of fuzzing.
     :type fuzz_factor: int
-    :return: fuzzed buffer
+    :return: fuzzed buffer.
     :rtype: bytearray
     """
     buf = deepcopy(buffer)
@@ -69,7 +69,7 @@ class FuzzExecutor(object):
         self.test_pairs_ = []
 
     def run_test(self, runs):
-        """Run tests.
+        """Run tests and build up statistics.
 
         :param runs: number of tests to run.
         """
@@ -85,6 +85,10 @@ class FuzzExecutor(object):
     @property
     def stats(self):
         """Retrieve statistics of last run.
+
+        The stats consist of a Counter with
+            * key = (<app-name>, <result>) and
+            * value = <number of runs>.
 
         :return: statistic counters.
         :rtype: Counter
@@ -126,8 +130,6 @@ class FuzzExecutor(object):
         :rtype: bool
         """
         app_name = os.path.basename(app_)
-        # TASK catch stderr of process and log it
-        # https://docs.python.org/3.4/library/subprocess.html?highlight=popen#subprocess.Popen.stderr
         process = subprocess.Popen([app_, file_])
 
         time.sleep(1)

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<review xmlns="http://plugins.intellij.net/revu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://plugins.intellij.net/revu http://plugins.intellij.net/revu/ns/revu_1_0.xsd" name="v0.2.0" status="draft" shared="false">
+  <history createdBy="sb" lastUpdatedBy="sb" createdOn="2014-12-13 17:02:14 +0100" lastUpdatedOn="2014-12-13 17:07:10 +0100"/>
+  <goal>Quality check before release.</goal>
+  <referential>
+    <priorities/>
+    <tags/>
+    <users>
+      <user displayName="sb" login="sb" roles="admin,reviewer,author"/>
+    </users>
+  </referential>
+  <filescope pathPattern="(file[*]:*//*&amp;&amp;!file[basepkg]:bin//*&amp;&amp;!file[basepkg]:develop-eggs//*&amp;&amp;!file[basepkg]:.idea//*&amp;&amp;!file[basepkg]:src/basepkg/dist//*&amp;&amp;!file[basepkg]:src/basepkg/basepkg.egg-info//*&amp;&amp;!file[basepkg]:src/basepkg/build//*&amp;&amp;!file[basepkg]:src/basepkg/gp_decorators//*&amp;&amp;!file[basepkg]:src/basepkg/gp_meta//*&amp;&amp;!file[basepkg]:src/basepkg/py-1.4.26-py3.4.egg//*&amp;&amp;!file[basepkg]:src/basepkg/pytest-2.6.4-py3.4.egg//*&amp;&amp;!file[basepkg]:src/basepkg/reports//*&amp;&amp;!file[basepkg]:src/basepkg/tests//*||file:src/basepkg/setup.py)&amp;&amp;!file:src/basepkg/.gitignore&amp;&amp;!file:src/basepkg/CHANGELOG.txt&amp;&amp;!file:src/basepkg/LICENSE.txt&amp;&amp;!file:src/basepkg/MANIFEST.in&amp;&amp;!file:src/basepkg/README.rst&amp;&amp;!file:src/basepkg/setup.cfg&amp;&amp;!file:src/basepkg/features/singleton.feature&amp;&amp;!file:src/basepkg/features/steps/ft_singleton.py"/>
+  <issues/>
+</review>
