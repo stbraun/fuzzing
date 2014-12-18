@@ -1,0 +1,22 @@
+version: 1
+formatters:
+  simple:
+    format: 'TEST -- %(asctime)s - %(name)s - %(levelname)s - %(message)s'
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: simple
+    stream: ext://sys.stdout
+loggers:
+  gp_tools:
+    level: DEBUG
+    handlers: [console]
+    propagate: no
+  gp_tools.fuzzing:
+    level: INFO
+    handlers: [console]
+    propagate: no
+root:
+  level: WARNING
+  handlers: [console]
