@@ -1,4 +1,5 @@
-'''
+# coding=utf-8
+"""
 basepkg: tests module.
 
 Meant for use with py.test.
@@ -7,4 +8,4 @@ Read more here: http://pytest.org/
 
 Copyright 2014, Stefan Braun
 Licensed under MIT
-'''
+"""

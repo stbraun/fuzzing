@@ -1,1 +1,1 @@
-include README.rst CHANGELOG.txt LICENSE.txt
+include README.rst CHANGELOG.txt LICENSE.txt gp_tools/resources docs/source docs/Makefile docs/make.bat
