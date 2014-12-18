@@ -2,18 +2,20 @@
 """A decorator for Singleton classes."""
 __author__ = 'sb'
 
+import wrapt
 
-def singleton(cls):
-    """Create a singleton instance of cls.
+_instances = {}
 
-    :param cls: class to instantiate.
-    :return: the single instance of cls.
+
+@wrapt.decorator
+def singleton(wrapped, _, args, kwargs):
+    """Return the single instance of wrapped.
+    :param wrapped: the wrapped class.
+    :param _: unused
+    :param args: optional arguments for wrapped object.
+    :param kwargs: optional arguments for wrapped object.
     """
-    _instances = {}
-
-    def get_instance(*args, **kwargs):
-        """Return the single instance of cls."""
-        if cls not in _instances:
-            _instances[cls] = cls(*args, **kwargs)
-        return _instances[cls]
-    return get_instance
+    global _instances
+    if wrapped not in _instances:
+        _instances[wrapped] = wrapped(*args, **kwargs)
+    return _instances[wrapped]

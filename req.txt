@@ -1,3 +1,4 @@
+wrapt
 PyYAML==3.11
 argh==0.26.1
 coverage==3.7.1

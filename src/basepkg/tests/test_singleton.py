@@ -35,6 +35,7 @@ class SingletonTest(unittest.TestCase):
         self.assertIs(instance_1, instance_2)
 
 
+# noinspection PyCompatibility
 class SomeClass(object, metaclass=Singleton):
     """Some class for testing."""
 

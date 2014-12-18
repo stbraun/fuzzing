@@ -1,6 +1,17 @@
 Release Notes
 =============
 
+
+Release 0.2.1
+-------------
+
+* Class ``LoggerFactory``. Logger factory for configuration of the Python logging framework.
+
+* Singleton decorator utilizes wrapt behaving much nicer.
+See https://www.youtube.com/watch?v=W7Rv-km3ZuA&spfreload=10 for Graham Dumpleton's talk
+on the workings of wrapt.
+
+
 Release 0.2.0
 -------------
 

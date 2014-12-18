@@ -18,3 +18,13 @@ Feature: Provide support for implementation of singleton classes.
     When creating multiple objects from the class
     And modifying the value of an attribute in one of them
     Then this modification is visible to all.
+
+  @wip
+  Scenario: A singleton class shall report their own type not 'function' (basepkg-47).
+    Given a singleton class.
+    Then type() shall return the class.
+
+  @wip
+  Scenario: A singleton class shall report their own module (basepkg-47).
+    Given a singleton class.
+    Then __module__ shall be the module of the class.

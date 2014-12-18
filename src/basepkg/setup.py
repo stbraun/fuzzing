@@ -26,7 +26,7 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.2.0"
+version = "0.2.1"
 
 setup(name="basepkg",
       version=version,
@@ -53,11 +53,10 @@ setup(name="basepkg",
                 'behave_test': behave_test,
                 },
 
-      # TODO: List of packages that this one depends upon:   
-      install_requires=['sphinx'],
-      # TODO: List executable scripts, provided by the package (this is just an example)
-      entry_points={
-        'console_scripts': 
-            ['basepkg=gp_meta:main']
-      }
+      # List of packages that this one depends upon:
+      install_requires=['sphinx', 'wrapt'],
+      # entry_points={
+      #   'console_scripts':
+      #       ['basepkg=gp_meta:main']
+      # }
 )

@@ -12,6 +12,17 @@ from collections import Counter
 import os.path
 from tempfile import mkstemp
 import subprocess
+from gp_tools.log import LoggerFactory
+
+
+def logger():
+    """Provide logger.
+
+    :return: local logger.
+    :rtype: Logger
+    """
+    lg = LoggerFactory.get_instance('gp_tools.fuzzer')
+    return lg
 
 
 def fuzz_string(seed_str, runs=100, fuzz_factor=50):
@@ -30,6 +41,7 @@ def fuzz_string(seed_str, runs=100, fuzz_factor=50):
     for _ in range(runs):
         fuzzed = fuzzer(buf, fuzz_factor)
         variants.append(''.join([chr(b) for b in fuzzed]))
+    logger().info('Fuzzed strings: {}'.format(variants))
     return variants
 
 
@@ -65,6 +77,9 @@ class FuzzExecutor(object):
         :param app_list: list of applications.
         :param file_list: list of files for testing.
         """
+        self.logger = LoggerFactory.get_instance('gp_tools.fuzzer.FuzzExecutor')
+        self.logger.info('Initializing FuzzExecutor ...')
+        self.logger.warning('Initializing FuzzExecutor ...')
         self.app_list = app_list
         self.file_list = file_list
         self.fuzz_factor = 251
