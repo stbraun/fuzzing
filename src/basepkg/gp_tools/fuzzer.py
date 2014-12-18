@@ -12,7 +12,7 @@ from collections import Counter
 import os.path
 from tempfile import mkstemp
 import subprocess
-
+import logging
 
 def fuzz_string(seed_str, runs=100, fuzz_factor=50):
     """A random fuzzer for a simulated text viewer application.
@@ -70,12 +70,14 @@ class FuzzExecutor(object):
         self.fuzz_factor = 251
         self.stats_ = Counter()
         self.test_pairs_ = []
+        self.logger = logging.getLogger('gp_tools.fuzzing.FuzzExecutor')
 
     def run_test(self, runs):
         """Run tests and build up statistics.
 
         :param runs: number of tests to run.
         """
+        self.logger.info('Start fuzzing ...')
         for _ in range(runs):
             app = random.choice(self.app_list)
             data_file = random.choice(self.file_list)
@@ -84,6 +86,7 @@ class FuzzExecutor(object):
             self.test_pairs_.append((app_name, file_name))
             fuzzed_file = self._fuzz_data_file(data_file)
             self._execute(app, fuzzed_file)
+        self.logger.info('Fuzzing completed.')
 
     @property
     def stats(self):
@@ -96,6 +99,7 @@ class FuzzExecutor(object):
         :return: statistic counters.
         :rtype: Counter
         """
+        self.logger.info('Statistics:\n{}\n'.format(repr(self.stats_)))
         return self.stats_
 
     @property
@@ -105,6 +109,7 @@ class FuzzExecutor(object):
         :return: (app, file) pairs of last run.
         :rtype: [(str, str)]
         """
+        self.logger.debug(self.test_pairs_)
         return self.test_pairs_
 
     def _fuzz_data_file(self, data_file):
