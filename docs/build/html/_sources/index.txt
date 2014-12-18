@@ -6,6 +6,10 @@
 Welcome to Base Package's documentation!
 ========================================
 
+Base Package is a bundle of Python packages which may be useful in many applications.
+Currently there is some code for logging and random testing.
+
+
 Contents:
 
 .. toctree::
