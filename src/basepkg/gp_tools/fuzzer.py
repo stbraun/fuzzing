@@ -12,7 +12,7 @@ from collections import Counter
 import os.path
 from tempfile import mkstemp
 import subprocess
-from gp_tools.log import LoggerFactory
+import logging
 
 
 def logger():
@@ -21,7 +21,7 @@ def logger():
     :return: local logger.
     :rtype: Logger
     """
-    lg = LoggerFactory.get_instance('gp_tools.fuzzer')
+    lg = logging.getLogger('gp_tools.fuzzer')
     return lg
 
 
@@ -77,9 +77,8 @@ class FuzzExecutor(object):
         :param app_list: list of applications.
         :param file_list: list of files for testing.
         """
-        self.logger = LoggerFactory.get_instance('gp_tools.fuzzer.FuzzExecutor')
+        self.logger = logging.getLogger('gp_tools.fuzzer.FuzzExecutor')
         self.logger.info('Initializing FuzzExecutor ...')
-        self.logger.warning('Initializing FuzzExecutor ...')
         self.app_list = app_list
         self.file_list = file_list
         self.fuzz_factor = 251
@@ -91,6 +90,7 @@ class FuzzExecutor(object):
 
         :param runs: number of tests to run.
         """
+        self.logger.info('Start fuzzing ...')
         for _ in range(runs):
             app = random.choice(self.app_list)
             data_file = random.choice(self.file_list)
@@ -99,6 +99,7 @@ class FuzzExecutor(object):
             self.test_pairs_.append((app_name, file_name))
             fuzzed_file = self._fuzz_data_file(data_file)
             self._execute(app, fuzzed_file)
+        self.logger.info('Fuzzing completed.')
 
     @property
     def stats(self):
