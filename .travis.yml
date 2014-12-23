@@ -4,8 +4,8 @@ python:
   - "3.4"
   - "pypy3"
 install:
-  - "cd src/basepkg && pip install ."
   - "pip install -r requirements.txt"
+  - "cd src/basepkg && pip install ."
 script:
   - py.test src/basepkg/tests
   - cd src/basepkg && behave --tags=-@slow features/
