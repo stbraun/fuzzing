@@ -2,7 +2,7 @@ language: python
 python:
   - "3.4"
 install:
-  - "pip install zc.buildout"
-  - "buildout"
+  - "pip install -r requirements.txt"
 script:
   - py.test
+  - behave
