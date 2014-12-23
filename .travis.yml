@@ -5,7 +5,7 @@ python:
   - "pypy3"
 install:
   - "pip install -r requirements.txt"
-  - "pushd src/basepakg"
+  - "pushd src/basepkg"
   - "pip install ."
 script:
   - behave --tags=-@slow features/
