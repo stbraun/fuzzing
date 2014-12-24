@@ -10,3 +10,10 @@ install:
 script:
   - behave --tags=-@slow features/
   - py.test tests/
+after_success:
+  - true
+
+# TODO:
+# [ ] create docs
+# [ ] upload docs
+# [ ] deploy package
