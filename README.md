@@ -1,4 +1,4 @@
-<img source=https://travis-ci.org/stbraun/basepkg.svg?branch=release%2F0.2.1/>
+[![Build Status](https://travis-ci.org/stbraun/basepkg.svg?branch=master)](https://travis-ci.org/stbraun/basepkg)
 
 Base Package
 ==========================
