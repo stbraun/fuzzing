@@ -31,6 +31,10 @@ Tools
 .. automodule:: gp_tools
        :members:
 
+.. automodule:: gp_tools.log
+       :members:
+       :member-order: bysource
+
 .. automodule:: gp_tools.fuzzer
        :members:
        :member-order: bysource
