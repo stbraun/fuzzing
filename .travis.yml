@@ -10,6 +10,3 @@ install:
 script:
   - behave --tags=-@slow features/
   - py.test tests/
-
-#  - py.test src/basepkg/tests
-#  - cd src/basepkg && behave --tags=-@slow features/
