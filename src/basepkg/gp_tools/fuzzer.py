@@ -12,6 +12,17 @@ from collections import Counter
 import os.path
 from tempfile import mkstemp
 import subprocess
+import logging
+
+
+def logger():
+    """Provide logger.
+
+    :return: local logger.
+    :rtype: Logger
+    """
+    lg = logging.getLogger('gp_tools.fuzzer')
+    return lg
 
 
 def fuzz_string(seed_str, runs=100, fuzz_factor=50):
@@ -30,6 +41,7 @@ def fuzz_string(seed_str, runs=100, fuzz_factor=50):
     for _ in range(runs):
         fuzzed = fuzzer(buf, fuzz_factor)
         variants.append(''.join([chr(b) for b in fuzzed]))
+    logger().info('Fuzzed strings: {}'.format(variants))
     return variants
 
 
@@ -65,6 +77,8 @@ class FuzzExecutor(object):
         :param app_list: list of applications.
         :param file_list: list of files for testing.
         """
+        self.logger = logging.getLogger('gp_tools.fuzzer.FuzzExecutor')
+        self.logger.info('Initializing FuzzExecutor ...')
         self.app_list = app_list
         self.file_list = file_list
         self.fuzz_factor = 251
@@ -76,6 +90,7 @@ class FuzzExecutor(object):
 
         :param runs: number of tests to run.
         """
+        self.logger.info('Start fuzzing ...')
         for _ in range(runs):
             app = random.choice(self.app_list)
             data_file = random.choice(self.file_list)
@@ -84,6 +99,7 @@ class FuzzExecutor(object):
             self.test_pairs_.append((app_name, file_name))
             fuzzed_file = self._fuzz_data_file(data_file)
             self._execute(app, fuzzed_file)
+        self.logger.info('Fuzzing completed.')
 
     @property
     def stats(self):

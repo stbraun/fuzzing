@@ -1,6 +1,19 @@
 Release Notes
 =============
 
+
+Release 0.2.1
+-------------
+
+* Class ``LoggerFactory``. Logger factory for configuration of the Python logging framework.
+
+* The ``fuzzer`` module uses logging.
+
+* Singleton decorator behaves much nicer since using ``wrapt``.
+  See `Graham Dumpleton's talk <https://www.youtube.com/watch?v=W7Rv-km3ZuA&spfreload=10>`_
+  on the workings of wrapt.
+
+
 Release 0.2.0
 -------------
 

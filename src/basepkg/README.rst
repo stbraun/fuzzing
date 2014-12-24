@@ -1,30 +1,20 @@
 ==================================================================
-basepkg: Some general meta classes.
+basepkg: modules not specific for a certain application.
 ==================================================================
 
-TODO: Modify the whole file as necessary.
 
-This is a "long description" file for the package that you are creating.
-If you submit your package to PyPi, this text will be presented on the `public page <http://pypi.python.org/pypi/python_package_boilerplate>`_ of your package.
+This project provides simple generally applicable functions and classes for Python programs.
 
-Note: This README has to be written using `reStructured Text <http://docutils.sourceforge.net/rst.html>`_, otherwise PyPi won't format it properly.
+Currently it helps with:
+
+  * Declaration of a class as singleton simply using the ``@singleton`` decorator.
+  * Random testing of functions and applications.
+  * Logging configuration.
 
 Installation
 ------------
 
 The easiest way to install most Python packages is via ``easy_install`` or ``pip``::
 
-    $ pip basepkg
-
-Usage
------
-
-TODO: This is a good place to start with a couple of concrete examples of how the package should be used.
-
-The boilerplate code provides a dummy ``main`` function that prints out the word 'Hello'::
-
-    >> from meta import main
-    >> main()
-    
-When the package is installed via ``easy_install`` or ``pip`` this function will be bound to the ``basepkg`` executable in the Python installation's ``bin`` directory (on Windows - the ``Scripts`` directory).
+    $ pip install basepkg
 

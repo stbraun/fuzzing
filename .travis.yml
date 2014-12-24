@@ -1,8 +1,12 @@
 language: python
 python:
+  - "3.3"
   - "3.4"
+  - "pypy3"
 install:
-  - "pip install zc.buildout"
-  - "buildout"
+  - "pip install -r requirements.txt"
+  - "pushd src/basepkg"
+  - "pip install ."
 script:
-  - py.test
+  - behave --tags=-@slow features/
+  - py.test tests/

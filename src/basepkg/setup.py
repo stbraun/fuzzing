@@ -26,17 +26,22 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.2.0"
+version = "0.2.1"
 
 setup(name="basepkg",
       version=version,
-      description="Some general gp_meta classes.",
+      description="Some general functions and classes.",
       long_description=open("README.rst").read(),
       classifiers=[  # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Software Development :: Testing'
       ],
@@ -53,11 +58,10 @@ setup(name="basepkg",
                 'behave_test': behave_test,
                 },
 
-      # TODO: List of packages that this one depends upon:   
-      install_requires=['sphinx'],
-      # TODO: List executable scripts, provided by the package (this is just an example)
-      entry_points={
-        'console_scripts': 
-            ['basepkg=gp_meta:main']
-      }
+      # List of packages that this one depends upon:
+      install_requires=['sphinx', 'wrapt'],
+      # entry_points={
+      #   'console_scripts':
+      #       ['basepkg=gp_meta:main']
+      # }
 )
