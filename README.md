@@ -1,3 +1,5 @@
+https://travis-ci.org/stbraun/basepkg.svg?branch=release%2F0.2.1
+
 Base Package
 ==========================
 
@@ -7,8 +9,6 @@ Currently it helps with:
 
   * Declaration of a class as singleton simply using the ``@singleton`` decorator.
   * Random testing of functions and applications.
-
-
 
 Copyright & License
 -------------------
