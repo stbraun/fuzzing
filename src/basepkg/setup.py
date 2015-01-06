@@ -59,7 +59,9 @@ setup(name="basepkg",
                 },
 
       # List of packages that this one depends upon:
-      install_requires=['sphinx', 'wrapt'],
+      install_requires=['sphinx', 'wrapt', 'PyYAML', 'argh', 'pathtools', 'setuptools'],
+      requires=['sphinx', 'wrapt', 'PyYAML', 'argh', 'pathtools', 'setuptools'],
+      provides=['gp_tools', 'gp_decorators'],
       # entry_points={
       #   'console_scripts':
       #       ['basepkg=gp_meta:main']
