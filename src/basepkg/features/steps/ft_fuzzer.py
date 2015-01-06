@@ -169,6 +169,37 @@ def step_impl(context, runs):
     """
     executor_ = context.fuzz_executor
     assert sum(executor_.stats.values()) == runs, "VERIFY: Number of recorded runs."
+    print("\nresults: ", executor_.stats)
+    for app, count in executor_.stats.items():
+        assert count > 0, "VERIFY: at least one test must have been performed and recorded."
+
+
+@then("{runs:d} results are recorded and succeeded.")
+def step_impl(context, runs):
+    """Check called apps / files.
+
+    :param runs: expected number of records.
+    :param context: test context.
+    """
+    executor_ = context.fuzz_executor
+    assert sum(executor_.stats.values()) == runs, "VERIFY: Number of recorded runs."
+    successful_runs = __get_counts(executor_.stats.items(), 'succeeded')
+    assert successful_runs == runs
+    for app, count in executor_.stats.items():
+        assert count > 0, "VERIFY: at least one test must have been performed and recorded."
+
+
+@then("{runs:d} results are recorded and failed.")
+def step_impl(context, runs):
+    """Check called apps / files.
+
+    :param runs: expected number of records.
+    :param context: test context.
+    """
+    executor_ = context.fuzz_executor
+    assert sum(executor_.stats.values()) == runs, "VERIFY: Number of recorded runs."
+    failed_runs = __get_counts(executor_.stats.items(), 'failed')
+    assert failed_runs == runs
     for app, count in executor_.stats.items():
         assert count > 0, "VERIFY: at least one test must have been performed and recorded."
 
@@ -188,3 +219,14 @@ def number_of_modified_bytes(buf, fuzzed_buf):
         if b != fuzzed_buf[idx]:
             count += 1
     return count
+
+
+def __get_counts(items, status):
+    """Get counts for test runs finished with given status.
+
+    :param items: iterable holding (key: count) pairs of test runs.
+    :param status: result status. status in {'succeeded', 'failed'}
+    :type status: String
+    :return: the number of test runs finished with given status.
+    """
+    return sum([cnt for key, cnt in items if key[1] == status])
