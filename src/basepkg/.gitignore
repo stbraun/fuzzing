@@ -4,3 +4,5 @@
 /*.egg-info
 /**/__pycache__/
 *.pyc
+features/resources/testfuzz.hi
+features/resources/testfuzz.o

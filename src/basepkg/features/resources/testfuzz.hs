@@ -13,7 +13,7 @@ main = do
     exit <- shallFail
     when (exit) $ do
       exitWith (ExitFailure 2)
-  input <- getLine -- just wait until test kills process.
+  input <- getLine -- just wait until test kills this process.
   putStrLn input
   exitWith ExitSuccess
 
@@ -21,4 +21,4 @@ main = do
 shallFail :: IO Bool
 shallFail = do
   rnd <- getStdRandom (randomR (1, 6))
-  return ((rnd :: Integer) > (4 :: Integer))
+  return ((rnd :: Integer) > (1 :: Integer))
