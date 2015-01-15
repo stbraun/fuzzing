@@ -19,4 +19,4 @@ __all__ = ['LoggerFactory', 'fuzzer', 'fuzz_string', 'FuzzExecutor']
 
 # Configure NullHandler to prevent warning in case logging is not configured.
 # See https://docs.python.org/2/howto/logging.html#library-config
-logging.getLogger('gp_tools').addHandler(logging.NullHandler())
+logging.getLogger('fuzzing').addHandler(logging.NullHandler())

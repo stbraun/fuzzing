@@ -77,7 +77,7 @@ class FuzzExecutor(object):
         :param app_list: list of applications.
         :param file_list: list of files for testing.
         """
-        self.logger = logging.getLogger('gp_tools.fuzzer.FuzzExecutor')
+        self.logger = logging.getLogger('fuzzing.fuzzer.FuzzExecutor')
         self.logger.info('Initializing FuzzExecutor ...')
         self.apps, self.args = FuzzExecutor.__parse_app_list(app_list)
         self.file_list = file_list

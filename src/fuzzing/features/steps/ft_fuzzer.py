@@ -3,7 +3,7 @@
 
 from behave import *
 
-from gp_tools.fuzzer import fuzzer, fuzz_string, FuzzExecutor
+from fuzzing.fuzzer import fuzzer, fuzz_string, FuzzExecutor
 
 
 @given("a byte array of len 10")

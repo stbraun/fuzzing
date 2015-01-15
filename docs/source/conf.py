@@ -51,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Base Package'
+project = 'Fuzzing'
 copyright = '2014, Stefan Braun'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -202,7 +202,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'BasePackagedoc'
+htmlhelp_basename = 'Fuzzingdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -224,7 +224,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'BasePackage.tex', 'Base Package Documentation',
+  ('index', 'Fuzzing.tex', 'Fuzzing Documentation',
    'Stefan Braun', 'manual'),
 ]
 
@@ -254,7 +254,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'basepackage', 'Base Package Documentation',
+    ('index', 'Fuzzing', 'Fuzzing Documentation',
      ['Stefan Braun'], 1)
 ]
 
@@ -268,8 +268,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'BasePackage', 'Base Package Documentation',
-   'Stefan Braun', 'BasePackage', 'General purpose classes and functions.',
+  ('index', 'Fuzzing', 'Fuzzing Documentation',
+   'Stefan Braun', 'Fuzzing', 'Stress testing.',
    'Development'),
 ]
 

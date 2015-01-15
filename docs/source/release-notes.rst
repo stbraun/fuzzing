@@ -29,4 +29,3 @@ First small step.
 
 * Basic functions for fuzz testing.
 * Decorator to declare a class as Singleton.
-* Meta class for Singletons (deprecated in favor of decorator).

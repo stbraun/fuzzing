@@ -1,20 +1,30 @@
 ==================================================================
-basepkg: modules not specific for a certain application.
+fuzzing: tools for stress testing arbitrary applications.
 ==================================================================
 
+Stress testing of applications can be done in lots of different ways.
+This package provides an easy to use tool to stress test applications which take files
+as parameters. Editors, image viewers, and many more classes of apps come to mind.
 
-This project provides simple generally applicable functions and classes for Python programs.
+The stress test is based on a given set of files, binary or text. Those files are taken
+randomly and some bytes are modified also randomly (fuzzing). Then the application gets
+executed with the fuzzed file. Repeating this over and over again stresses the robustness
+for defective input data of the application.
 
-Currently it helps with:
 
-  * Declaration of a class as singleton simply using the ``@singleton`` decorator.
-  * Random testing of functions and applications.
+Currently provided:
+
+  * Random testing of functions.
+  * Random testing of applications taking files.
   * Logging configuration.
 
 Installation
 ------------
 
-The easiest way to install most Python packages is via ``easy_install`` or ``pip``::
+The easiest way to install is via ``easy_install`` or ``pip``::
 
-    $ pip install basepkg
+    $ pip install fuzzing
+
+
+
 
