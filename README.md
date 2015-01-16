@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/stbraun/basepkg.svg?branch=develop)](https://travis-ci.org/stbraun/basepkg)
+[![Build Status](https://travis-ci.org/stbraun/fuzzing.svg?branch=develop)](https://travis-ci.org/stbraun/fuzzing)
 
 Base Package
 ==========================
