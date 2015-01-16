@@ -21,7 +21,7 @@ def logger():
     :return: local logger.
     :rtype: Logger
     """
-    lg = logging.getLogger('gp_tools.fuzzer')
+    lg = logging.getLogger('fuzzing.fuzzer')
     return lg
 
 
