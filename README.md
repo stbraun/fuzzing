@@ -24,7 +24,7 @@ Currently provided:
 Installation
 ------------
 
-The easiest way to install is via ``easy_install`` or ``pip``::
+The easiest way to install is via ``easy_install`` or ``pip``:
 
     $ pip install fuzzing
 
