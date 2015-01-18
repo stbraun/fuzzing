@@ -2,6 +2,10 @@
 fuzzing: tools for stress testing arbitrary applications.
 ==================================================================
 
+.. image:: https://travis-ci.org/stbraun/fuzzing.svg?branch=develop
+
+.. image:: https://readthedocs.org/projects/fuzzing/badge/?version=latest
+
 Stress testing of applications can be done in lots of different ways.
 This package provides an easy to use tool to stress test applications which take files
 as parameters. Editors, image viewers, and many more classes of apps come to mind.
