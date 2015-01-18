@@ -1,4 +1,4 @@
-
+===============================
 Fuzzing - random stress testing
 ===============================
 
@@ -10,7 +10,7 @@ Contents:
    release-notes
    tutorial
    api
-
+   license
 
 
 Indices and tables

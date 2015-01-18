@@ -30,5 +30,39 @@ The easiest way to install is via ``easy_install`` or ``pip`` ::
     $ pip install fuzzing
 
 
+Example
+-------
+
+::
+
+    from fuzzing.fuzzer import FuzzExecutor
+
+    # Files to use as initial input seed.
+    file_list = ["./features/data/t1.pdf", "./features/data/t3.pdf", "./features/data/t2.jpg"]
+
+    # List of applications to test.
+    apps_under_test = ["/Applications/Adobe Reader 9/Adobe Reader.app/Contents/MacOS/AdobeReader",
+                       "/Applications/PDFpen 6.app/Contents/MacOS/PDFpen 6",
+                       "/Applications/Preview.app/Contents/MacOS/Preview",
+                       ]
+
+    number_of_runs = 13
+
+    def test():
+        fuzz_executor = FuzzExecutor(apps_under_test, file_list)
+        fuzz_executor.run_test(number_of_runs)
+        return fuzz_executor.stats
+
+    def main():
+        stats = test()
+        for k, v in stats.items():
+            print('{} = {}'.format(k, v))
 
 
+
+
+Copyright & License
+-------------------
+
+  * Copyright 2015, Stefan Braun
+  * License: MIT
