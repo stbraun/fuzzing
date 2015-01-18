@@ -21,7 +21,7 @@ def logger():
     :return: local logger.
     :rtype: Logger
     """
-    lg = logging.getLogger('gp_tools.fuzzer')
+    lg = logging.getLogger('fuzzing.fuzzer')
     return lg
 
 
@@ -77,9 +77,9 @@ class FuzzExecutor(object):
         :param app_list: list of applications.
         :param file_list: list of files for testing.
         """
-        self.logger = logging.getLogger('gp_tools.fuzzer.FuzzExecutor')
+        self.logger = logging.getLogger('fuzzing.fuzzer.FuzzExecutor')
         self.logger.info('Initializing FuzzExecutor ...')
-        self.app_list = app_list
+        self.apps, self.args = FuzzExecutor.__parse_app_list(app_list)
         self.file_list = file_list
         self.fuzz_factor = 251
         self.stats_ = Counter()
@@ -92,7 +92,7 @@ class FuzzExecutor(object):
         """
         self.logger.info('Start fuzzing ...')
         for _ in range(runs):
-            app = random.choice(self.app_list)
+            app = random.choice(self.apps)
             data_file = random.choice(self.file_list)
             app_name = os.path.basename(app)
             file_name = os.path.basename(data_file)
@@ -149,7 +149,10 @@ class FuzzExecutor(object):
         :rtype: bool
         """
         app_name = os.path.basename(app_)
-        process = subprocess.Popen([app_, file_])
+        args = [app_]
+        args.extend(self.args[app_])
+        args.append(file_)
+        process = subprocess.Popen(args)
 
         time.sleep(1)
         crashed = process.poll()
@@ -159,3 +162,23 @@ class FuzzExecutor(object):
             process.terminate()
             self.stats_[(app_name, 'succeeded')] += 1
         return True
+
+    @staticmethod
+    def __parse_app_list(app_list):
+        """Parse list of apps for arguments.
+
+        :param app_list: list of apps with optional arguments.
+        :return: list of apps and assigned argument dict.
+        :rtype: [String], {String: [String]}
+        """
+        args = {}
+        apps = []
+        for app_str in app_list:
+            parts = app_str.split("&")
+            app_path = parts[0].strip()
+            apps.append(app_path)
+            if len(parts) > 1:
+                args[app_path] = [arg.strip() for arg in parts[1].split()]
+            else:
+                args[app_path] = []
+        return apps, args

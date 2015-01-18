@@ -1,37 +1,19 @@
+=============
 API Reference
 =============
 
-Meta classes
-------------
 
-.. automodule:: gp_meta
+Fuzzing
+-------
+
+.. automodule:: fuzzing
        :members:
 
-.. automodule:: gp_meta.singleton
-       :members:
-       :member-order: bysource
-
-The Singleton meta class is deprecated. Please use the singleton decorator instead.
-
-
-Decorators
-----------
-
-.. automodule:: gp_decorators
-       :members:
-
-.. automodule:: gp_decorators.singleton
+.. automodule:: fuzzing.log
        :members:
        :member-order: bysource
 
-
-Tools
------
-
-.. automodule:: gp_tools
-       :members:
-
-.. automodule:: gp_tools.fuzzer
+.. automodule:: fuzzing.fuzzer
        :members:
        :member-order: bysource
 

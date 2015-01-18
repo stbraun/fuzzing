@@ -48,25 +48,63 @@ Feature: Provide a fuzz tester.
     |   101 |      101 |
 
 
-  @slow
-  Scenario Outline: File fuzzer
+  Scenario Outline: File fuzzer - succeeding
     Given a list of file paths
     | file_path              |
     | ./features/data/t1.pdf |
     | ./features/data/t2.jpg |
     | ./features/data/t3.pdf |
     And a list of applications
-    | application                                                               |
-    | /Applications/Adobe Reader 9/Adobe Reader.app/Contents/MacOS/AdobeReader  |
-    | /Applications/Preview.app/Contents/MacOS/Preview                          |
+    | application                             |
+    | python & features/resources/testfuzz.py |
     And a FuzzExecutor instance created with those lists.
     When running a test <runs> times
     Then a randomly chosen application will be called with a randomly chosen file.
-    And <runs> results are recorded.
+    And <runs> results are recorded and succeeded.
 
     Examples: Test runs
     | runs |
     |    0 |
     |    1 |
     |    2 |
-    |   11 |
+
+
+  Scenario Outline: File fuzzer - failing
+    Given a list of file paths
+      | file_path              |
+      | ./features/data/t1.pdf |
+      | ./features/data/t2.jpg |
+      | ./features/data/t3.pdf |
+    And a list of applications
+      | application                                 |
+      | python & features/resources/testfuzz.py -c  |
+    And a FuzzExecutor instance created with those lists.
+    When running a test <runs> times
+    Then a randomly chosen application will be called with a randomly chosen file.
+    And <runs> results are recorded and failed.
+
+  Examples: Test runs
+    | runs |
+    |    0 |
+    |    1 |
+    |    2 |
+
+
+  @slow
+  Scenario Outline: File fuzzer - randomly failing
+    Given a list of file paths
+      | file_path              |
+      | ./features/data/t1.pdf |
+      | ./features/data/t2.jpg |
+      | ./features/data/t3.pdf |
+    And a list of applications
+      | application                                    |
+      | python & features/resources/testfuzz.py -p 0.8 |
+    And a FuzzExecutor instance created with those lists.
+    When running a test <runs> times
+    Then a randomly chosen application will be called with a randomly chosen file.
+    And <runs> results are recorded.
+
+  Examples: Test runs
+    | runs |
+    |   50 |

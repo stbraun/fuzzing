@@ -5,8 +5,15 @@ python:
   - "pypy3"
 install:
   - "pip install -r requirements.txt"
-  - "pushd src/basepkg"
+  - "pushd src/fuzzing"
   - "pip install ."
 script:
   - behave --tags=-@slow features/
   - py.test tests/
+after_success:
+  - true
+
+# TODO:
+# [ ] create docs
+# [ ] upload docs
+# [ ] deploy package

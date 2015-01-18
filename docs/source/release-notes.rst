@@ -1,5 +1,14 @@
+=============
 Release Notes
 =============
+
+
+Release 0.2.2
+-------------
+
+Mainly cleanup.
+
+* Test uses pure Python test app. See ``features/resources/testfuzz.py``.
 
 
 Release 0.2.1
@@ -29,4 +38,3 @@ First small step.
 
 * Basic functions for fuzz testing.
 * Decorator to declare a class as Singleton.
-* Meta class for Singletons (deprecated in favor of decorator).

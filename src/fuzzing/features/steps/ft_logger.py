@@ -4,7 +4,7 @@
 from behave import *
 import logging
 
-from gp_tools.log import LoggerFactory
+from fuzzing.log import LoggerFactory
 
 
 @given("a logger called {logger_name}")

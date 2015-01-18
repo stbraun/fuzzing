@@ -1,16 +1,16 @@
 """
-basepkg: Some general meta classes.
+fuzzing: Some general meta classes.
 
 Note that "python setup.py test" invokes pytest on the package. With appropriately
 configured setup.cfg, this will check both xxx_test modules and docstrings.
+Currently all tests are written for behave!
 
-Copyright 2014, Stefan Braun.
+Copyright 2015, Stefan Braun.
 Licensed under MIT.
 """
 import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
-from setuptools_behave import behave_test
 
 
 # This is a plug-in for setuptools that will invoke py.test
@@ -26,11 +26,11 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.2.1"
+version = "0.2.2"
 
-setup(name="basepkg",
+setup(name="fuzzing",
       version=version,
-      description="Some general functions and classes.",
+      description="Tools for stress testing applications.",
       long_description=open("README.rst").read(),
       classifiers=[  # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
         'Development Status :: 4 - Beta',
@@ -48,20 +48,20 @@ setup(name="basepkg",
       keywords="development tools",  # Separate with spaces
       author="Stefan Braun",
       author_email="sb@action.ms",
-      url="https://github.com/stbraun/basepkg",
+      url="https://github.com/stbraun/fuzzing",
       license="MIT",
       packages=find_packages(exclude=['examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
       tests_require=['pytest', 'behave>=1.2.4'],
-      cmdclass={'test': PyTest,
-                'behave_test': behave_test,
-                },
+      cmdclass={'test': PyTest},
 
       # List of packages that this one depends upon:
-      install_requires=['sphinx', 'wrapt'],
+      install_requires=['sphinx', 'wrapt', 'PyYAML', 'argh', 'pathtools', 'setuptools'],
+      requires=['sphinx', 'wrapt', 'PyYAML', 'argh', 'pathtools', 'setuptools'],
+      provides=['fuzzing', 'gp_decorators'],
       # entry_points={
       #   'console_scripts':
-      #       ['basepkg=gp_meta:main']
+      #       ['fuzzing=fuzzing:main']
       # }
 )

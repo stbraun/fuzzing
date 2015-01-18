@@ -1,0 +1,1 @@
+include README.rst CHANGELOG.txt LICENSE.txt fuzzing/resources docs/source docs/Makefile docs/make.bat

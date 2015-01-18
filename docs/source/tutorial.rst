@@ -1,11 +1,114 @@
+========
 Tutorial
 ========
 
 The following sections will show how to use the classes and functions of the package.
 
+* `Logging`_
+* `Singletons`_
+* `Random testing`_
 
-Create Singletons
------------------
+
+Logging
+-------
+
+The Python standard library provides good logging capabilities with the module ``logging``.
+Requirements on logging depend on the application and may change during the life cycle. Therefore
+a logging system must be flexible. The ``logging`` module is highly configurable and extendable.
+
+Class ``fuzzing.LoggerFactory`` reads a YAML configuration file and initializes the logging system.
+It is just a thin layer on top of ``logging`` abstracting from the details of initialization.
+Loggers can be used as usual; the use of ``LoggerFactory`` is transparent for the loggers.
+
+Configuration file
+++++++++++++++++++
+
+``LoggerFactory`` expects to get a YAML file containing the configuration of the loggers. To deploy
+your configuration put it into a folder of your package, e.g.: ::
+
+    <my_package>
+        <my_sources>
+        <resources>
+            log_config.yaml
+        <tests>
+        <doc>
+
+Then add it to your MANIFEST.in so that it will be packaged with your code: ::
+
+    include <my_package>/resources
+
+
+The documentation of the Python standard library describes how to write such a file:
+https://docs.python.org/3.4/library/logging.config.html.
+
+Example: ::
+
+    version: 1
+    formatters:
+      concise:
+        format: '%(asctime)s - %(levelname)s - %(message)s'
+      detailed:
+        format: '%(asctime)s - %(levelname)s - %(filename)s:%(lineno)3d - %(funcName)s() :: %(message)s'
+      thread_info:
+        format: '%(asctime)s - %(levelname)s - %(filename)s:%(lineno)3d - %(funcName)s() - %(thread)d:%(threadName)s :: %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        level: WARNING
+        formatter: concise
+        stream: ext://sys.stdout
+      file:
+        class: logging.handlers.RotatingFileHandler
+        filename: 'fuzzer.log'
+        maxBytes: 100000
+        backupCount: 3
+        level: DEBUG
+        formatter: detailed
+    loggers:
+      fuzzing:
+        level: DEBUG
+        handlers: [console, file]
+        propagate: no
+      fuzzing.fuzzing:
+        level: INFO
+        handlers: [console, file]
+        propagate: no
+      fuzzing.fuzzing.FuzzExecutor:
+        level: INFO
+        handlers: [file, console]
+        propagate: no
+    root:
+      level: WARNING
+      handlers: [console]
+
+
+Initialization
+++++++++++++++
+
+The ``logging`` system must be initialized before the first use. So put something like the
+following into the startup code of your application: ::
+
+    from gp_tools import LoggerFactory
+
+    def my_main():
+        lf = LoggerFactory(package_name='my_package', config_file='resources/log_config.yaml')
+        lf.initialize()
+
+
+Now you can log as you're used to it: ::
+
+    import logging
+
+    # 'my_logger' is the name as used in the configuration.
+    logger = logging.getLogger('my_logger')
+
+    logger.info('Happy Logging!')
+
+That's it :-)
+
+
+Singletons
+----------
 
 Singleton classes are characterized by the fact that there will be never more than a single instance.
 This may be useful for classes handling physical devices or any other stateful objects, e.g. caches,
@@ -14,9 +117,6 @@ that need to be handled in a consistent way.
 Singletons should be used with care, because they may lead to high coupling if used in many places.
 So they may be comfortable first, but become a nightmare later on when extending or maintaining an application.
 
-A singleton class can be created based on a meta class or using a decorator.
-Using the decorator is the preferred way. Meta class will likely be deprecated soon.
-
 Creating a singleton class using the singleton decorator is simple: ::
 
     from gp_decorators.singleton import singleton
@@ -24,22 +124,8 @@ Creating a singleton class using the singleton decorator is simple: ::
     @singleton
     class SomeClass(object):
         """A singleton class."""
-        <your code>
+        # <your code>
 
-
-
-Usage of Singleton meta class with Python3: ::
-
-    from gp_meta.singleton import Singleton
-
-    class SomeClass(object, metaclass=Singleton):
-        <your code>
-
-For Python2 use the following syntax: ::
-
-    class SomeClass(object):
-        __metaclass__ = Singleton
-        <your code
 
 
 .. index:: Random testing
@@ -59,7 +145,7 @@ mostly valid data provided by a carefully crafted generator, or anything in betw
 
 .. index:: ! Charlie Miller
 
-Charlie Miller did some interesting work on fuzz testing. The function fuzzer() is
+Charlie Miller did some interesting work on fuzz testing. The function ``fuzzer()`` is essentially
 taken from *Babysitting an Army of Monkeys* (see references below).
 
 **References:**
@@ -69,7 +155,7 @@ taken from *Babysitting an Army of Monkeys* (see references below).
 
 
 How to do random testing on your own?
-_____________________________________
++++++++++++++++++++++++++++++++++++++
 
 Fuzz testing can be done on different levels:
 
@@ -84,25 +170,25 @@ This is already good for robustness tests. In most cases you also want a kind
 of statistics and a documentation of the test cases resulting in an error.
 
 Generating test data
-____________________
+++++++++++++++++++++
 
 .. index:: Charlie Miller
 
 In general random testing can be done with any kind of input data (I guess ;-).
-The code found in ``gp_tools.fuzzer.fuzzer()`` is working on a binary buffer. It is a copy of
+The code found in ``fuzzing.fuzzer.fuzzer()`` is working on a binary buffer. It is a copy of
 Charlie Miller's code mentioned above.
 
 The binary buffer may contain something
 like a pdf, an image, a presentation and so on. It also works fine for normal text, covering
 ASCII texts, HTML, XML, JSON and other text based formats.
-``gp_tools.fuzzer.fuzz_string()`` is a wrapper simplifying such use cases a bit.
+``fuzzing.fuzzer.fuzz_string()`` is a wrapper simplifying such use cases a bit.
 
 Example of a simple generator:
-______________________________
+++++++++++++++++++++++++++++++
 
 ::
 
-    import gp_tools.fuzzer as fuzzer
+    import fuzzing.fuzzer as fuzzer
     seed = "This could be the content of a huge text file."
     number_of_fuzzed_variants_to_generate = 10
     fuzz_factor = 7
@@ -113,9 +199,9 @@ Of course you can also create one fuzzed variant at a time and feed it directly 
 
 
 Calling the SUT with the test data
-__________________________________
+++++++++++++++++++++++++++++++++++
 
-How to call the SUT depends obviously from its type. A Python function can be called directly with the created
+How to call the SUT depends obviously on its type. A Python function can be called directly with the created
 data. It might make sense to enclose the call into a try / except block to catch errors. It is also easy to
 check the result value for failure.
 
@@ -129,10 +215,10 @@ information about the success or failure of the run. At least crashes are easily
 
 
 The oracle - or: How to evaluate the test result?
-_________________________________________________
++++++++++++++++++++++++++++++++++++++++++++++++++
 
 The function evaluating the result of a test run is called *oracle*. That's fine because the result
-is not always clear and understandable.
+is not always clear and understandable ;-).
 
 Running an application in a separate process as described above let us quite easily detect crashes.
 If we need more detailed information there is no general way to get at it. One of the most general
@@ -144,14 +230,14 @@ or a log file, we may be able to write parsers that enable us to look for failur
 
 
 Complete example:
-_________________
++++++++++++++++++
 
 The following sample code runs 100 tests against the applications listed in ``apps_under_test``.
 Test data is generated using a simple fuzzer on a set of files defines in ``file_list``.
 
 After finishing the test runs a statistic is printed.
 
-Note that num_tests should be much bigger for real testing. But it makes sense to start with a small number
+Note that ``num_tests`` should be much bigger for real testing. But it makes sense to start with a small number
 to get the test harness working. Then increase this number to a couple of millions or so.
 
 Some of the code found in the ``fuzzer`` module is inlined for easier comprehension.
@@ -227,14 +313,14 @@ Some of the code found in the ``fuzzer`` module is inlined for easier comprehens
 
 
 Using FuzzExecutor
-__________________
+++++++++++++++++++
 
 Fuzz testing applications using files can be used often because it is quite generic. Therefore
 it makes sense to encapsulate this functionality and make it easy to apply.
 
 The example above can be written much faster using the class ``FuzzExecutor``: ::
 
-    from gp_tools.fuzzer import FuzzExecutor
+    from fuzzing.fuzzer import FuzzExecutor
 
     # Files to use as initial input seed.
     file_list = ["./features/data/t1.pdf", "./features/data/t3.pdf", "./features/data/t2.jpg"]
@@ -257,14 +343,9 @@ The example above can be written much faster using the class ``FuzzExecutor``: :
         for k, v in stats.items():
             print('{} = {}'.format(k, v))
 
+
+Getting test statistics
++++++++++++++++++++++++
+
 The property ``FuzzExecutor.stat`` is an instance of ``collections.Counter``. It holds the number
 of successful and failed runs for each application.
-
-Another property, ``FuzzExecutor.test_pairs``, provides a list of all test runs in
-form of (application, file) tuples.
-
-..  TODO - rewrite this after introducing logging.
-
-**Note:** When running a lot of tests this list might get too big. Then
-it is better to remove this feature. In a later release it may be replaced
-by logging mechanism.
