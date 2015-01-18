@@ -1,6 +1,0 @@
-Version 0.1.0dev1
------------------
-
-    - Initial experimental version.
-
-    - Provides singletons applicable via meta class or decorator.

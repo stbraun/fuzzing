@@ -5,7 +5,7 @@ Copyright 2014, Stefan Braun
 Licensed under MIT.
 """
 
-from .singleton import singleton
+from gp_decorators import singleton
 import logging
 
 # Symbols available when importing with *.

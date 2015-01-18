@@ -1,4 +1,8 @@
-/bin/
-/develop-eggs/
-/parts/
-/.installed.cfg
+/build
+/dist
+/src/fuzzing/pytest-2.6.4-py3.4.egg
+/*.egg-info
+/**/__pycache__/
+*.pyc
+src/
+fuzzing.log*

@@ -99,7 +99,7 @@ Feature: Provide a fuzz tester.
       | ./features/data/t3.pdf |
     And a list of applications
       | application                                    |
-      | python & features/resources/testfuzz.py -p 0.8 |
+      | python & features/resources/testfuzz.py -p 0.2 |
     And a FuzzExecutor instance created with those lists.
     When running a test <runs> times
     Then a randomly chosen application will be called with a randomly chosen file.
@@ -107,4 +107,4 @@ Feature: Provide a fuzz tester.
 
   Examples: Test runs
     | runs |
-    |   50 |
+    |   11 |
