@@ -2,6 +2,14 @@ Release Notes
 =============
 
 
+Release 0.2.2
+-------------
+
+Mainly cleanup.
+
+* Test uses pure Python test app. See ``features/resources/testfuzz.py``.
+
+
 Release 0.2.1
 -------------
 

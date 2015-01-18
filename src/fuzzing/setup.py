@@ -3,14 +3,14 @@ fuzzing: Some general meta classes.
 
 Note that "python setup.py test" invokes pytest on the package. With appropriately
 configured setup.cfg, this will check both xxx_test modules and docstrings.
+Currently all tests are written for behave!
 
-Copyright 2014, Stefan Braun.
+Copyright 2015, Stefan Braun.
 Licensed under MIT.
 """
 import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
-from setuptools_behave import behave_test
 
 
 # This is a plug-in for setuptools that will invoke py.test
@@ -26,7 +26,7 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.2.1"
+version = "0.2.2"
 
 setup(name="fuzzing",
       version=version,
@@ -54,16 +54,14 @@ setup(name="fuzzing",
       include_package_data=True,
       zip_safe=False,
       tests_require=['pytest', 'behave>=1.2.4'],
-      cmdclass={'test': PyTest,
-                'behave_test': behave_test,
-                },
+      cmdclass={'test': PyTest},
 
       # List of packages that this one depends upon:
       install_requires=['sphinx', 'wrapt', 'PyYAML', 'argh', 'pathtools', 'setuptools'],
       requires=['sphinx', 'wrapt', 'PyYAML', 'argh', 'pathtools', 'setuptools'],
-      provides=['gp_tools', 'gp_decorators'],
+      provides=['fuzzing', 'gp_decorators'],
       # entry_points={
       #   'console_scripts':
-      #       ['fuzzing=gp_meta:main']
+      #       ['fuzzing=fuzzing:main']
       # }
 )
