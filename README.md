@@ -13,6 +13,7 @@ randomly and some bytes are modified also randomly ('fuzzed'). Then the applicat
 executed with the fuzzed file. Repeating this over and over again stresses the robustness
 for defective input data of the application.
 
+Tutorial and API documentation can be found on [ReadTheDocs](https://readthedocs.org/projects/fuzzing/).
 
 Currently provided:
 -------------------
