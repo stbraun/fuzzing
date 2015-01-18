@@ -6,3 +6,4 @@
 *.pyc
 src/
 fuzzing.log*
+.installed.cfg
