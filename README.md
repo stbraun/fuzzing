@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/stbraun/fuzzing.svg?branch=develop)](https://travis-ci.org/stbraun/fuzzing)
+[![Build Status](https://travis-ci.org/stbraun/fuzzing.svg?branch=develop)](https://travis-ci.org/stbraun/fuzzing) [![Documentation Status](https://readthedocs.org/projects/fuzzing/badge/?version=latest)](https://readthedocs.org/projects/fuzzing/?badge=latest)
+
 
 Fuzzing - tools for stress testing arbitrary applications.
 ==========================================================
