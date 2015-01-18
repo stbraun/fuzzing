@@ -3,6 +3,12 @@ Release Notes
 =============
 
 
+Release 0.2.3a1
+---------------
+
+Package structure simplified.
+
+
 Release 0.2.2
 -------------
 
