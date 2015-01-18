@@ -33,6 +33,9 @@ The easiest way to install is via ``easy_install`` or ``pip`` ::
 
     $ pip install fuzzing
 
+Run tests: ::
+
+    $ behave
 
 Example
 -------

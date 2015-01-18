@@ -26,14 +26,14 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.2.3a1"
+version = '0.2.3a1'
 
 setup(name="fuzzing",
       version=version,
       description="Tools for stress testing applications.",
       long_description=open("README.rst").read(),
       classifiers=[  # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'Development Status :: 4 - Beta',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
