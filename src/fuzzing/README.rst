@@ -11,6 +11,10 @@ randomly and some bytes are modified also randomly (fuzzing). Then the applicati
 executed with the fuzzed file. Repeating this over and over again stresses the robustness
 for defective input data of the application.
 
+Tutorial and API documentation can be found on ReadTheDocs_.
+
+.. _ReadTheDocs: http://fuzzing.readthedocs.org/.
+
 
 Currently provided:
 
