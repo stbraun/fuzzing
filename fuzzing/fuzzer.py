@@ -82,8 +82,10 @@ class FuzzExecutor(object):
         self.apps, self.args = FuzzExecutor.__parse_app_list(app_list)
         self.file_list = file_list
         self.fuzz_factor = 251
-        self.stats_ = Counter()
-        self.test_pairs_ = []
+        self.stats_ = {}
+        for app in self.apps:
+            key = os.path.basename(app)
+            self.stats_[key] = Counter()
 
     def run_test(self, runs):
         """Run tests and build up statistics.
@@ -94,9 +96,6 @@ class FuzzExecutor(object):
         for _ in range(runs):
             app = random.choice(self.apps)
             data_file = random.choice(self.file_list)
-            app_name = os.path.basename(app)
-            file_name = os.path.basename(data_file)
-            self.test_pairs_.append((app_name, file_name))
             fuzzed_file = self._fuzz_data_file(data_file)
             self._execute(app, fuzzed_file)
         self.logger.info('Fuzzing completed.')
@@ -105,23 +104,14 @@ class FuzzExecutor(object):
     def stats(self):
         """Retrieve statistics of last run.
 
-        The stats consist of a Counter with
-            * key = (<app-name>, <result>) and
-            * value = <number of runs>.
+        The stats consist of a dictionary with
+            * key = <app-name> and
+            * value = Counter() {status: count}.
 
         :return: statistic counters.
-        :rtype: Counter
+        :rtype: {str: Counter}
         """
         return self.stats_
-
-    @property
-    def test_pairs(self):
-        """Retrieve (app, file) pair list of last test run.
-
-        :return: (app, file) pairs of last run.
-        :rtype: [(str, str)]
-        """
-        return self.test_pairs_
 
     def _fuzz_data_file(self, data_file):
         """Generate fuzzed variant of given file.
@@ -157,10 +147,10 @@ class FuzzExecutor(object):
         time.sleep(1)
         crashed = process.poll()
         if crashed:
-            self.stats_[(app_name, 'failed')] += 1
+            self.stats_[app_name]['failed'] += 1
         else:
             process.terminate()
-            self.stats_[(app_name, 'succeeded')] += 1
+            self.stats_[app_name]['succeeded'] += 1
         return True
 
     @staticmethod
