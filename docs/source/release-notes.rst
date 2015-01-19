@@ -2,6 +2,16 @@
 Release Notes
 =============
 
+Release 0.2.3
+-------------
+
+* Data structure for run statistics improved.
+* Tests can now be configured using a YAML file.
+* Test runner script added for improved user experience ::
+    run_fuzzer.py config.yaml
+
+Reading the test runner script may help to get a clearer picture how to use the tool.
+
 
 Release 0.2.3a1
 ---------------
