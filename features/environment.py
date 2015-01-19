@@ -15,3 +15,4 @@ def before_all(context):
     lf.initialize()
     ll = lf.get_instance('environment')
     ll.info('Logger initialized: {}'.format(lf.config))
+    ll.info('Initial test context: {}'.format(context))

@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="tests" pattern="file[fuzzing]:tests//*||file[fuzzing]:features//*" />
+</component>

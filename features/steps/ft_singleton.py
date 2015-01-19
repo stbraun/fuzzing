@@ -151,6 +151,7 @@ class GeneralStore(BaseStore):
     pass
 
 
+# noinspection PyArgumentList
 @singleton
 class SingleStore(BaseStore):
     """Singleton class."""

@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="code" pattern="(file[fuzzing]:fuzzing/*||file[fuzzing]:fuzzing//*||file[fuzzing]:gp_decorators//*||file[fuzzing]:tests//*||file[fuzzing]:features/steps//*||file:features/environment.py||file:features/resources/testfuzz.py)&amp;&amp;!file:fuzzing/resources/log_config.yaml" />
+</component>

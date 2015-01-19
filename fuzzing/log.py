@@ -12,6 +12,7 @@ import yaml
 from gp_decorators.singleton import singleton
 
 
+# noinspection PyArgumentList
 @singleton
 class LoggerFactory(object):
     """Create and manage logger instances.

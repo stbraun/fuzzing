@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # coding=utf-8
+"""Test app for fuzzer."""
 
 import sys
 import argparse
@@ -11,7 +12,7 @@ def main():
     """Test for fuzzer."""
     description = "Simple app to test our fuzzer."
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('inpath', help='The name of a file to read.')
+    parser.add_argument('in_path', help='The name of a file to read.')
     parser.add_argument('-c', '--crash', help='Crash the app!', action="store_true")
     parser.add_argument('-p', '--probability',
                         help='Crash the app with given probability (0.0-1.0)',

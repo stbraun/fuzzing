@@ -169,7 +169,6 @@ def step_impl(context, runs):
     """
     executor_ = context.fuzz_executor
     assert sum(executor_.stats.values()) == runs, "VERIFY: Number of recorded runs."
-    print("\nresults: ", executor_.stats)
     for app, count in executor_.stats.items():
         assert count > 0, "VERIFY: at least one test must have been performed and recorded."
 
