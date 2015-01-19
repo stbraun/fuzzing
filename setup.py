@@ -59,6 +59,7 @@ setup(name="fuzzing",
       zip_safe=False,
       tests_require=['pytest', 'behave>=1.2.4'],
       cmdclass={'test': PyTest},
+      scripts=['run_fuzzer.py', ],
 
       # List of packages that this one depends upon:
       install_requires=['sphinx', 'wrapt', 'PyYAML', 'argh', 'pathtools', 'setuptools'],

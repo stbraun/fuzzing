@@ -136,28 +136,8 @@ def step_impl(context, runs):
     """
     executor = context.fuzz_executor
     executor.run_test(runs)
-    assert sum(executor.stats.values()) == runs, "VERIFY: stats available."
-
-
-@then("a randomly chosen application will be called with a randomly chosen file.")
-def step_impl(context):
-    """Check called apps / files.
-
-    :param context: test context.
-    """
-    executor = context.fuzz_executor
-    pairs = executor.test_pairs
-    app_2_files = {}
-    for app, file in pairs:
-        if app not in app_2_files:
-            app_2_files[app] = []
-        if file not in app_2_files[app]:
-            app_2_files[app].append(file)
-    if len(pairs) > 10 and len(context.file_list) > 1:
-        multiple_files = False
-        for app, files in app_2_files.items():
-            multiple_files = context.file_list or len(files) > 0
-        assert multiple_files, "VERIFY: at least one app was tested with multiple files."
+    count = __get_all_counts(executor.stats.values())
+    assert count == runs, "VERIFY: stats available."
 
 
 @then("{runs:d} results are recorded.")
@@ -168,7 +148,8 @@ def step_impl(context, runs):
     :param context: test context.
     """
     executor_ = context.fuzz_executor
-    assert sum(executor_.stats.values()) == runs, "VERIFY: Number of recorded runs."
+    count = __get_all_counts(executor_.stats.values())
+    assert count == runs, "VERIFY: Number of recorded runs."
     for app, count in executor_.stats.items():
         assert count > 0, "VERIFY: at least one test must have been performed and recorded."
 
@@ -181,11 +162,10 @@ def step_impl(context, runs):
     :param context: test context.
     """
     executor_ = context.fuzz_executor
-    assert sum(executor_.stats.values()) == runs, "VERIFY: Number of recorded runs."
-    successful_runs = __get_counts(executor_.stats.items(), 'succeeded')
+    count = __get_all_counts(executor_.stats.values())
+    assert count == runs, "VERIFY: Number of recorded runs."
+    successful_runs = __get_counts(executor_.stats.values(), 'succeeded')
     assert successful_runs == runs
-    for app, count in executor_.stats.items():
-        assert count > 0, "VERIFY: at least one test must have been performed and recorded."
 
 
 @then("{runs:d} results are recorded and failed.")
@@ -196,11 +176,10 @@ def step_impl(context, runs):
     :param context: test context.
     """
     executor_ = context.fuzz_executor
-    assert sum(executor_.stats.values()) == runs, "VERIFY: Number of recorded runs."
-    failed_runs = __get_counts(executor_.stats.items(), 'failed')
+    count = __get_all_counts(executor_.stats.values())
+    assert count == runs, "VERIFY: Number of recorded runs."
+    failed_runs = __get_counts(executor_.stats.values(), 'failed')
     assert failed_runs == runs
-    for app, count in executor_.stats.items():
-        assert count > 0, "VERIFY: at least one test must have been performed and recorded."
 
 # ##### helpers
 
@@ -220,12 +199,21 @@ def number_of_modified_bytes(buf, fuzzed_buf):
     return count
 
 
-def __get_counts(items, status):
+def __get_counts(counters, status):
     """Get counts for test runs finished with given status.
 
-    :param items: iterable holding (key: count) pairs of test runs.
+    :param counters: iterable holding (key: count) pairs of test runs.
     :param status: result status. status in {'succeeded', 'failed'}
     :type status: String
     :return: the number of test runs finished with given status.
     """
-    return sum([cnt for key, cnt in items if key[1] == status])
+    return sum([cnt[status] for cnt in counters])
+
+
+def __get_all_counts(counters):
+    """Get counts for all test runs.
+
+    :param counters: iterable holding (key: count) pairs of test runs.
+    :return: the number of test runs finished independent of status.
+    """
+    return sum([sum(cnt.values()) for cnt in counters])

@@ -59,8 +59,7 @@ Feature: Provide a fuzz tester.
     | python & features/resources/testfuzz.py |
     And a FuzzExecutor instance created with those lists.
     When running a test <runs> times
-    Then a randomly chosen application will be called with a randomly chosen file.
-    And <runs> results are recorded and succeeded.
+    Then <runs> results are recorded and succeeded.
 
     Examples: Test runs
     | runs |
@@ -80,8 +79,7 @@ Feature: Provide a fuzz tester.
       | python & features/resources/testfuzz.py -c  |
     And a FuzzExecutor instance created with those lists.
     When running a test <runs> times
-    Then a randomly chosen application will be called with a randomly chosen file.
-    And <runs> results are recorded and failed.
+    Then <runs> results are recorded and failed.
 
   Examples: Test runs
     | runs |
@@ -102,8 +100,7 @@ Feature: Provide a fuzz tester.
       | python & features/resources/testfuzz.py -p 0.2 |
     And a FuzzExecutor instance created with those lists.
     When running a test <runs> times
-    Then a randomly chosen application will be called with a randomly chosen file.
-    And <runs> results are recorded.
+    Then <runs> results are recorded.
 
   Examples: Test runs
     | runs |

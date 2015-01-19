@@ -11,7 +11,7 @@ def before_all(context):
 
     :param context: test context.
     """
-    lf = LoggerFactory('fuzzing', config_file='../features/resources/test_config.yaml')
+    lf = LoggerFactory(config_file='../features/resources/test_config.yaml')
     lf.initialize()
     ll = lf.get_instance('environment')
     ll.info('Logger initialized: {}'.format(lf.config))
