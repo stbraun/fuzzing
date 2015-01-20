@@ -2,9 +2,9 @@
 fuzzing: tools for stress testing arbitrary applications.
 ==================================================================
 
-.. image:: https://travis-ci.org/stbraun/fuzzing.svg?branch=develop
+.. image:: https://travis-ci.org/stbraun/fuzzing.svg?branch=master
 
-.. image:: https://readthedocs.org/projects/fuzzing/badge/?version=latest
+.. image:: https://readthedocs.org/projects/fuzzing/badge/?version=master
 
 Stress testing of applications can be done in lots of different ways.
 This package provides an easy to use tool to stress test applications which take files
@@ -66,7 +66,7 @@ Example
             print('{} = {}'.format(k, v))
 
 
-Using pre-build test runner and configuration
+Using pre-built test runner and configuration
 ---------------------------------------------
 
 For convenience a test runner is provided which takes a test configuration.
