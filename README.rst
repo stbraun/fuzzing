@@ -66,7 +66,36 @@ Example
             print('{} = {}'.format(k, v))
 
 
+Using pre-build test runner and configuration
+---------------------------------------------
 
+For convenience a test runner is provided which takes a test configuration.
+
+Example of a configuration YAML file: ::
+
+    version: 1
+    seed_files: ['requirements.txt', 'README.rst']
+    applications: ['MyFunnyApp', 'AdobeReader']
+    runs: 8000
+
+Then call the test runner in a terminal session: ::
+
+    $ run_fuzzer.py test.yaml
+
+This will execute the tests as configured and print the test result when done: ::
+
+    $ run_fuzzer.py test.yaml
+    Starting up ...
+    ... finished
+
+    Test Results:
+
+    MyFunnyApp
+        succeeded: 4021
+        failed: 95
+    AdobeReader
+        succeeded: 3883
+        failed: 1
 
 Copyright & License
 -------------------
