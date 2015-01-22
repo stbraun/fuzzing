@@ -9,12 +9,12 @@ Licensed under MIT.
 """
 
 from .log import LoggerFactory
-from .fuzzer import fuzzer, fuzz_string, FuzzExecutor
+from .fuzzer import fuzzer, fuzz_string, FuzzExecutor, TestStatCounter
 import logging
 
 
 # Symbols available when importing with *.
-__all__ = ['LoggerFactory', 'fuzzer', 'fuzz_string', 'FuzzExecutor']
+__all__ = ['LoggerFactory', 'fuzzer', 'fuzz_string', 'FuzzExecutor', 'TestStatCounter']
 
 
 # Configure NullHandler to prevent warning in case logging is not configured.

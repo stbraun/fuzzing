@@ -68,6 +68,26 @@ def fuzzer(buffer, fuzz_factor=101):
     return buf
 
 
+class TestStatCounter(object):
+    """Hold a set of test results."""
+    def __init__(self, keys):
+        """Prepare instance for test setup.
+
+        :param keys: list of keys.
+        """
+        self.stats_ = {}
+        for key in keys:
+            self.stats_[key] = Counter()
+
+    def add(self, key, status):
+        """Add a new test result to the statistics."""
+        self.stats_[key][status] += 1
+
+    def stats(self):
+        """Return stats counters."""
+        return self.stats_
+
+
 class FuzzExecutor(object):
     """Run fuzz tests on applications."""
 
@@ -82,10 +102,8 @@ class FuzzExecutor(object):
         self.apps, self.args = FuzzExecutor.__parse_app_list(app_list)
         self.file_list = file_list
         self.fuzz_factor = 251
-        self.stats_ = {}
-        for app in self.apps:
-            key = os.path.basename(app)
-            self.stats_[key] = Counter()
+        keys = [os.path.basename(app) for app in self.apps]
+        self.stats_ = TestStatCounter(keys)
 
     def run_test(self, runs):
         """Run tests and build up statistics.
@@ -111,7 +129,7 @@ class FuzzExecutor(object):
         :return: statistic counters.
         :rtype: {str: Counter}
         """
-        return self.stats_
+        return self.stats_.stats_
 
     def _fuzz_data_file(self, data_file):
         """Generate fuzzed variant of given file.
@@ -145,13 +163,12 @@ class FuzzExecutor(object):
         process = subprocess.Popen(args)
 
         time.sleep(1)
+        status = {True: 'succeeded', False: 'failed'}
         crashed = process.poll()
-        if crashed:
-            self.stats_[app_name]['failed'] += 1
-        else:
+        self.stats_.add(app_name, status[crashed is None])
+        if crashed is None:
+            # process succeeded, so just terminate it
             process.terminate()
-            self.stats_[app_name]['succeeded'] += 1
-        return True
 
     @staticmethod
     def __parse_app_list(app_list):
