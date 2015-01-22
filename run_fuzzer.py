@@ -4,9 +4,10 @@
 
 import sys
 import argparse
+from concurrent.futures import ProcessPoolExecutor
 import yaml
 
-from fuzzing import FuzzExecutor
+from fuzzing import FuzzExecutor, TestStatCounter
 
 APPLICATIONS = 'applications'
 SEED_FILES = 'seed_files'
@@ -58,8 +59,11 @@ def execute_test(config):
     :param config: test configuration.
     :type config: {}
     """
+    import os
+    print('Starting process: {}'.format(os.getpid()))
     executor = FuzzExecutor(config[APPLICATIONS], config[SEED_FILES])
     executor.run_test(config[RUNS])
+    print('Process {} finishes.'.format(os.getpid()))
     return executor.stats
 
 
@@ -75,6 +79,28 @@ def show_test_stats(test_stats):
             print('\t{}: {}'.format(status, count))
 
 
+def prepare_test_stats(futures):
+    """Get stats from futures and merge.
+
+    :param futures: list of futures holding test results.
+    :return: dictionary of combined test results.
+    """
+    combined = None
+    for future in futures:
+        res = future.result()
+        if combined is None:
+            combined = res
+        else:
+            for k in res.keys():
+                try:
+                    combined[k].update(res[k])
+                except KeyError:
+                    print('Key missing: combined[{}]'.format(k))
+        #print('res: {}'.format(res))
+        #print('combined: {}'.format(combined))
+    return combined  # TASK must combine all results
+
+
 def main():
     """Read configuration and execute test runs."""
     parser = argparse.ArgumentParser(description='Stress test applications.')
@@ -87,8 +113,13 @@ def main():
         print('Example:\n{}'.format(help_configuration))
         return 1
     print("Starting up ...")
-    test_stats = execute_test(configuration)
+    # TASK introduce coonfiguration parameters
+    futures = []
+    with ProcessPoolExecutor(4) as executor:
+        for _ in range(4):
+            futures.append(executor.submit(execute_test, configuration))
     print("... finished")
+    test_stats = prepare_test_stats(futures)
     show_test_stats(test_stats)
     return 0
 
