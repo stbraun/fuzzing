@@ -11,8 +11,12 @@ from fuzzing import FuzzExecutor, TestStatCounter
 
 APPLICATIONS = 'applications'
 SEED_FILES = 'seed_files'
+PROCESSORS = 'processors'
+PROCESSES = 'processes'
 RUNS = 'runs'
 DEFAULT_RUNS = 10
+DEFAULT_PROCESSORS = 1
+DEFAULT_PROCESSES = 3
 
 help_configuration = """
 version: 1
@@ -46,10 +50,15 @@ def validate_config(conf_dict):
     :type conf_dict: {}
     :raise InvalidConfigurationError:
     """
+    # TASK improve validation
     if APPLICATIONS not in conf_dict.keys() or SEED_FILES not in conf_dict.keys():
         raise InvalidConfigurationError
     if RUNS not in conf_dict.keys():
         conf_dict[RUNS] = DEFAULT_RUNS
+    if PROCESSES not in conf_dict.keys():
+        conf_dict[PROCESSES] = DEFAULT_PROCESSES
+    if PROCESSORS not in conf_dict.keys():
+        conf_dict[PROCESSORS] = DEFAULT_PROCESSORS
     return
 
 
@@ -96,9 +105,7 @@ def prepare_test_stats(futures):
                     combined[k].update(res[k])
                 except KeyError:
                     print('Key missing: combined[{}]'.format(k))
-        #print('res: {}'.format(res))
-        #print('combined: {}'.format(combined))
-    return combined  # TASK must combine all results
+    return combined
 
 
 def main():
@@ -113,10 +120,9 @@ def main():
         print('Example:\n{}'.format(help_configuration))
         return 1
     print("Starting up ...")
-    # TASK introduce coonfiguration parameters
     futures = []
-    with ProcessPoolExecutor(4) as executor:
-        for _ in range(4):
+    with ProcessPoolExecutor(configuration[PROCESSORS]) as executor:
+        for _ in range(configuration[PROCESSES]):
             futures.append(executor.submit(execute_test, configuration))
     print("... finished")
     test_stats = prepare_test_stats(futures)

@@ -1,4 +1,7 @@
 version: 1
 seed_files: ['requirements.txt', 'README.rst']
-applications: ['python & features/resources/testfuzz.py -p 0.3']
-runs: 3
+applications: ['python & features/resources/testfuzz.py -p 0.3',
+               '/Applications/Adobe Reader 9/Adobe Reader.app/Contents/MacOS/AdobeReader']
+runs: 4
+processors: 3
+processes: 8
