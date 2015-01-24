@@ -3,7 +3,7 @@
 
 from behave import *
 
-from fuzzing.fuzzer import fuzzer, fuzz_string, FuzzExecutor, TestStatCounter
+from fuzzing.fuzzer import fuzzer, fuzz_string, FuzzExecutor, Status
 
 
 @given("a byte array of len 10")
@@ -152,8 +152,6 @@ def step_impl(context, runs):
     stats = executor_.stats
     count = stats.cumulated_counts()
     assert count == runs, "VERIFY: Number of recorded runs."
-    for app, count in executor_.stats.items():
-        assert count > 0, "VERIFY: at least one test must have been performed and recorded."
 
 
 @then("{runs:d} results are recorded and succeeded.")
@@ -167,7 +165,7 @@ def step_impl(context, runs):
     stats = executor_.stats
     count = stats.cumulated_counts()
     assert count == runs, "VERIFY: Number of recorded runs."
-    successful_runs = stats.cumulated_counts_for_status('succeeded')
+    successful_runs = stats.cumulated_counts_for_status(Status.SUCCESS)
     assert successful_runs == runs
 
 
@@ -182,7 +180,7 @@ def step_impl(context, runs):
     stats = executor_.stats
     count = stats.cumulated_counts()
     assert count == runs, "VERIFY: Number of recorded runs."
-    failed_runs = stats.cumulated_counts_for_status('failed')
+    failed_runs = stats.cumulated_counts_for_status(Status.FAILED)
     assert failed_runs == runs
 
 # ##### helpers

@@ -2,6 +2,23 @@
 """Fuzz testing module.
 
 A Toolbox to create fuzzers for random testing of software.
+
+Copyright (c) 2015 Stefan Braun
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
 import random
@@ -13,6 +30,7 @@ import os.path
 from tempfile import mkstemp
 import subprocess
 import logging
+import enum
 
 
 def logger():
@@ -68,24 +86,33 @@ def fuzzer(buffer, fuzz_factor=101):
     return buf
 
 
+@enum.unique
+class Status(enum.Enum):
+    """Status values for test runs."""
+    FAILED = 0
+    SUCCESS = 1
+
+
 class TestStatCounter(object):
     """Hold a set of test results."""
     def __init__(self, keys):
         """Prepare instance for test setup.
 
-        :param keys: list of keys.
+        :param keys: set of keys.
         """
+        self.keys = set(keys)
         self.stats_ = {}
         for key in keys:
             self.stats_[key] = Counter()
 
     def add(self, key, status):
-        """Add a new test result to the statistics."""
-        self.stats_[key][status] += 1
+        """Add a new test result to the statistics.
 
-    def stats(self):
-        """Return stats counters."""
-        return self.stats_
+        :param key: key of the test run.
+        :param status: status of the test run.
+        """
+        assert key in self.keys, 'ENSURE: key is valid.'
+        self.stats_[key][status] += 1
 
     def cumulated_counts(self):
         """Return sum over all counters."""
@@ -97,6 +124,22 @@ class TestStatCounter(object):
         :param status: the status to summarize.
         """
         return sum([v[status] for v in self.stats_.values()])
+
+    def retrieve_count(self, key, status):
+        """Return count of key / status pair."""
+        assert key in self.keys, 'ENSURE: key is valid.'
+        assert status in Status, 'ENSURE: status is valid.'
+        return self.stats_[key][status]
+
+    def __add__(self, other):
+        """Merge test statistics."""
+        combined_keys = self.keys.union(other.keys)
+        tsc = TestStatCounter(combined_keys)
+        for key in self.stats_:
+            tsc.stats_[key].update(self.stats_[key])
+        for key in other.stats_:
+            tsc.stats_[key].update(other.stats_[key])
+        return tsc
 
 
 class FuzzExecutor(object):
@@ -174,10 +217,11 @@ class FuzzExecutor(object):
         process = subprocess.Popen(args)
 
         time.sleep(1)
-        status = {True: 'succeeded', False: 'failed'}
+        status = {True: Status.SUCCESS, False: Status.FAILED}
         crashed = process.poll()
-        self.stats_.add(app_name, status[crashed is None])
-        if crashed is None:
+        result = status[crashed is None]
+        self.stats_.add(app_name, result)
+        if result is Status.SUCCESS:
             # process succeeded, so just terminate it
             process.terminate()
 
