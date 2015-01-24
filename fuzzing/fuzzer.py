@@ -87,6 +87,17 @@ class TestStatCounter(object):
         """Return stats counters."""
         return self.stats_
 
+    def cumulated_counts(self):
+        """Return sum over all counters."""
+        return sum([sum(v.values()) for v in self.stats_.values()])
+
+    def cumulated_counts_for_status(self, status):
+        """Return sum over all counters for given status.
+
+        :param status: the status to summarize.
+        """
+        return sum([v[status] for v in self.stats_.values()])
+
 
 class FuzzExecutor(object):
     """Run fuzz tests on applications."""
@@ -127,9 +138,9 @@ class FuzzExecutor(object):
             * value = Counter() {status: count}.
 
         :return: statistic counters.
-        :rtype: {str: Counter}
+        :rtype: TestStatCounter
         """
-        return self.stats_.stats_
+        return self.stats_
 
     def _fuzz_data_file(self, data_file):
         """Generate fuzzed variant of given file.

@@ -1,6 +1,24 @@
 #!/usr/bin/env python3
 # coding=utf-8
-"""A simple script to make fuzz-testing more convenient."""
+"""A simple script to make fuzz-testing more convenient.
+
+Copyright (c) 2015 Stefan Braun
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+"""
 
 import sys
 import argparse
@@ -88,15 +106,14 @@ def show_test_stats(test_stats):
             print('\t{}: {}'.format(status, count))
 
 
-def prepare_test_stats(futures):
-    """Get stats from futures and merge.
+def combine_test_stats(results):
+    """Combine the test results.
 
-    :param futures: list of futures holding test results.
+    :param results: list of test results.
     :return: dictionary of combined test results.
     """
     combined = None
-    for future in futures:
-        res = future.result()
+    for res in results:
         if combined is None:
             combined = res
         else:
@@ -125,7 +142,7 @@ def main():
         for _ in range(configuration[PROCESSES]):
             futures.append(executor.submit(execute_test, configuration))
     print("... finished")
-    test_stats = prepare_test_stats(futures)
+    test_stats = combine_test_stats([f.result() for f in futures])
     show_test_stats(test_stats)
     return 0
 
