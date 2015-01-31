@@ -98,12 +98,17 @@ class TestStatCounter(object):
     def __init__(self, keys):
         """Prepare instance for test setup.
 
-        :param keys: set of keys.
+        :param keys: set of keys_.
         """
-        self.keys = set(keys)
+        self.keys_ = set(keys)
         self.stats_ = {}
         for key in keys:
             self.stats_[key] = Counter()
+
+    @property
+    def keys(self):
+        """Retrieve the set of keys."""
+        return self.keys_
 
     def add(self, key, status):
         """Add a new test result to the statistics.
@@ -111,7 +116,7 @@ class TestStatCounter(object):
         :param key: key of the test run.
         :param status: status of the test run.
         """
-        assert key in self.keys, 'ENSURE: key is valid.'
+        assert key in self.keys_, 'ENSURE: key is valid.'
         self.stats_[key][status] += 1
 
     def cumulated_counts(self):
@@ -126,14 +131,18 @@ class TestStatCounter(object):
         return sum([v[status] for v in self.stats_.values()])
 
     def retrieve_count(self, key, status):
-        """Return count of key / status pair."""
-        assert key in self.keys, 'ENSURE: key is valid.'
+        """Return count of key / status pair.
+        :param key: key to retrieve count for.
+        :param status: status to retrieve count for.
+        :return: count
+        """
+        assert key in self.keys_, 'ENSURE: key is valid.'
         assert status in Status, 'ENSURE: status is valid.'
         return self.stats_[key][status]
 
     def __add__(self, other):
         """Merge test statistics."""
-        combined_keys = self.keys.union(other.keys)
+        combined_keys = self.keys_.union(other.keys_)
         tsc = TestStatCounter(combined_keys)
         for key in self.stats_:
             tsc.stats_[key].update(self.stats_[key])

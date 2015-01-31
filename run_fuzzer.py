@@ -25,7 +25,9 @@ import argparse
 from concurrent.futures import ProcessPoolExecutor
 import yaml
 
+from fuzzing import Status as TestStatus
 from fuzzing import FuzzExecutor, TestStatCounter
+
 
 APPLICATIONS = 'applications'
 SEED_FILES = 'seed_files'
@@ -97,31 +99,37 @@ def execute_test(config):
 def show_test_stats(test_stats):
     """Print test statistics.
 
-    :param test_stats: result of test run.
+    :param test_stats: result of test runs.
+    :type test_stats: TestStatCounter
     """
-    print('\nTest Results:\n')
-    for key in test_stats:
+    print('\n{}'.format('_' * 50))
+    print('Test Results:')
+    print('{}'.format('_' * 50))
+    count_failed = test_stats.cumulated_counts_for_status( TestStatus.FAILED)
+    count_succeeded = test_stats.cumulated_counts_for_status( TestStatus.SUCCESS)
+    count_all = count_succeeded + count_failed
+    print('Tests run/succeeded/failed: {} / {} / {}\n'.format(count_all,
+                                                              count_succeeded,
+                                                              count_failed))
+    for key in test_stats.keys:
         print('{}'.format(key))
-        for status, count in test_stats[key].items():
-            print('\t{}: {}'.format(status, count))
+        for status in TestStatus:
+            count = test_stats.retrieve_count(key, status)
+            print('\t{}: {}'.format(status.name, count))
+    print('{}\n'.format('_' * 50))
 
 
 def combine_test_stats(results):
     """Combine the test results.
 
     :param results: list of test results.
-    :return: dictionary of combined test results.
+    :type results: [TestStatCounter]
+    :return: combined statistics.
+    :rtype: TestStatCounter
     """
-    combined = None
+    combined = TestStatCounter(set())
     for res in results:
-        if combined is None:
-            combined = res
-        else:
-            for k in res.keys():
-                try:
-                    combined[k].update(res[k])
-                except KeyError:
-                    print('Key missing: combined[{}]'.format(k))
+        combined += res
     return combined
 
 

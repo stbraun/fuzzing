@@ -28,7 +28,7 @@ class TestStatCounterTests(unittest.TestCase):
     """Test cases for test result class."""
 
     def test_create_empty_instance(self):
-        """Create instance of status counter without keys."""
+        """Create instance of status counter without keys_."""
         tsc = TestStatCounter([])
         self.assertIsNotNone(tsc, msg='Instance created.')
 
@@ -71,7 +71,7 @@ class TestStatCounterTests(unittest.TestCase):
 
     def test_merge_matching_keys(self):
         """Merge two test statistics.
-        Both have same set of keys.
+        Both have same set of keys_.
         """
         keys = ['a', 'b', 'c']
         counts_1 = [2, 3, 4, 5, 6, 7]
@@ -85,7 +85,7 @@ class TestStatCounterTests(unittest.TestCase):
 
     def test_merge_differing_keys(self):
         """Merge two test statistics.
-        The statistics have different sets of keys.
+        The statistics have different sets of keys_.
         """
         keys_1 = ['a', 'b', 'c']
         keys_2 = ['b', 'c', 'd']
@@ -110,10 +110,10 @@ class TestStatCounterTests(unittest.TestCase):
     def __increment_counter(self, tsc, keys, counts):
         """Increment counters for each key/status pair.
 
-        Iterate over keys / status / counts and increment the counters.
+        Iterate over keys_ / status / counts and increment the counters.
 
         :param tsc: the unit under test.
-        :param keys: list of keys
+        :param keys: list of keys_
         :param counts: list of counts to set.
         """
         print('Status: {}'.format(Status))
