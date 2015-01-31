@@ -95,6 +95,7 @@ class Status(enum.Enum):
 
 class TestStatCounter(object):
     """Hold a set of test results."""
+
     def __init__(self, keys):
         """Prepare instance for test setup.
 
@@ -149,6 +150,21 @@ class TestStatCounter(object):
         for key in other.stats_:
             tsc.stats_[key].update(other.stats_[key])
         return tsc
+
+    def __repr__(self):
+        """Create printable representation."""
+        count_failed = self.cumulated_counts_for_status(Status.FAILED)
+        count_succeeded = self.cumulated_counts_for_status(Status.SUCCESS)
+        count_all = count_succeeded + count_failed
+        info = 'Tests run/succeeded/failed: {} / {} / {}\n'.format(count_all,
+                                                                   count_succeeded,
+                                                                   count_failed)
+        for key in self.keys_:
+            info += '{}\n'.format(key)
+            for status in Status:
+                count = self.retrieve_count(key, status)
+                info += '\t{}: {}\n'.format(status.name, count)
+        return info
 
 
 class FuzzExecutor(object):

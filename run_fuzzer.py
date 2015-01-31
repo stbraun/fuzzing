@@ -105,17 +105,7 @@ def show_test_stats(test_stats):
     print('\n{}'.format('_' * 50))
     print('Test Results:')
     print('{}'.format('_' * 50))
-    count_failed = test_stats.cumulated_counts_for_status( TestStatus.FAILED)
-    count_succeeded = test_stats.cumulated_counts_for_status( TestStatus.SUCCESS)
-    count_all = count_succeeded + count_failed
-    print('Tests run/succeeded/failed: {} / {} / {}\n'.format(count_all,
-                                                              count_succeeded,
-                                                              count_failed))
-    for key in test_stats.keys:
-        print('{}'.format(key))
-        for status in TestStatus:
-            count = test_stats.retrieve_count(key, status)
-            print('\t{}: {}'.format(status.name, count))
+    print(test_stats),
     print('{}\n'.format('_' * 50))
 
 
