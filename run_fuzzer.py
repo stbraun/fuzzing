@@ -25,7 +25,6 @@ import argparse
 from concurrent.futures import ProcessPoolExecutor
 import yaml
 
-from fuzzing import Status as TestStatus
 from fuzzing import FuzzExecutor, TestStatCounter
 
 
