@@ -61,8 +61,7 @@ Example
 
     def main():
         stats = test()
-        for k, v in stats.items():
-            print('{} = {}'.format(k, v))
+        print(stats)
 
 
 Using pre-built test runner and configuration
