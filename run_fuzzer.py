@@ -42,6 +42,8 @@ version: 1
 seed_files: ['requirements.txt', 'README.rst']
 applications: ['python & features/resources/testfuzz.py -p 0.5']
 runs: 15
+processors: 3
+processes: 8
 """
 
 

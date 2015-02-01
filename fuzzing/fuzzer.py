@@ -100,6 +100,7 @@ class TestStatCounter(object):
         """Prepare instance for test setup.
 
         :param keys: set of keys_.
+        :type keys: [str]
         """
         self.keys_ = set(keys)
         self.stats_ = {}
@@ -108,33 +109,47 @@ class TestStatCounter(object):
 
     @property
     def keys(self):
-        """Retrieve the set of keys."""
-        return self.keys_
+        """Retrieve the set of keys.
+
+        :return: set of keys.
+        :rtype: set(str)
+        """
+        return deepcopy(self.keys_)
 
     def add(self, key, status):
         """Add a new test result to the statistics.
 
-        :param key: key of the test run.
+        :param key: key of the test run. Must be in key set!
+        :type key: str
         :param status: status of the test run.
+        :type status: Status
         """
         assert key in self.keys_, 'ENSURE: key is valid.'
         self.stats_[key][status] += 1
 
     def cumulated_counts(self):
-        """Return sum over all counters."""
+        """Return sum over all counters.
+
+        :return: The number of test runs; failed and successful.
+        """
         return sum([sum(v.values()) for v in self.stats_.values()])
 
     def cumulated_counts_for_status(self, status):
         """Return sum over all counters for given status.
 
         :param status: the status to summarize.
+        :type status: Status
+        :return: number of tests resulting in status.
         """
         return sum([v[status] for v in self.stats_.values()])
 
     def retrieve_count(self, key, status):
         """Return count of key / status pair.
+
         :param key: key to retrieve count for.
+        :type key: str
         :param status: status to retrieve count for.
+        :type status: Status
         :return: count
         """
         assert key in self.keys_, 'ENSURE: key is valid.'
@@ -142,7 +157,15 @@ class TestStatCounter(object):
         return self.stats_[key][status]
 
     def __add__(self, other):
-        """Merge test statistics."""
+        """Merge test statistics.
+
+        Does not modify the statistics, but creates and returns a new one.
+
+        :param other: test statistics to merge with self.
+        :type other: TestStatCounter
+        :return: the merged statistics.
+        :rtype: TestStatCounter
+        """
         combined_keys = self.keys_.union(other.keys_)
         tsc = TestStatCounter(combined_keys)
         for key in self.stats_:
@@ -152,7 +175,11 @@ class TestStatCounter(object):
         return tsc
 
     def __repr__(self):
-        """Create printable representation."""
+        """Create printable representation.
+
+        :return: printable statistics.
+        :rtype: str
+        """
         count_failed = self.cumulated_counts_for_status(Status.FAILED)
         count_succeeded = self.cumulated_counts_for_status(Status.SUCCESS)
         count_all = count_succeeded + count_failed
@@ -201,10 +228,6 @@ class FuzzExecutor(object):
     def stats(self):
         """Retrieve statistics of last run.
 
-        The stats consist of a dictionary with
-            * key = <app-name> and
-            * value = Counter() {status: count}.
-
         :return: statistic counters.
         :rtype: TestStatCounter
         """
@@ -247,7 +270,7 @@ class FuzzExecutor(object):
         result = status[crashed is None]
         self.stats_.add(app_name, result)
         if result is Status.SUCCESS:
-            # process succeeded, so just terminate it
+            # process did not crash, so just terminate it
             process.terminate()
 
     @staticmethod
