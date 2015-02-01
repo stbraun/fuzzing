@@ -4,127 +4,10 @@ Tutorial
 
 The following sections will show how to use the classes and functions of the package.
 
+* `Random testing`_
 * `Logging`_
 * `Singletons`_
-* `Random testing`_
 
-
-Logging
--------
-
-The Python standard library provides good logging capabilities with the module ``logging``.
-Requirements on logging depend on the application and may change during the life cycle. Therefore
-a logging system must be flexible. The ``logging`` module is highly configurable and extendable.
-
-Class ``fuzzing.LoggerFactory`` reads a YAML configuration file and initializes the logging system.
-It is just a thin layer on top of ``logging`` abstracting from the details of initialization.
-Loggers can be used as usual; the use of ``LoggerFactory`` is transparent for the loggers.
-
-Configuration file
-++++++++++++++++++
-
-``LoggerFactory`` expects to get a YAML file containing the configuration of the loggers. To deploy
-your configuration put it into a folder of your package, e.g.: ::
-
-    <my_package>
-        <my_sources>
-        <resources>
-            log_config.yaml
-        <tests>
-        <doc>
-
-Then add it to your MANIFEST.in so that it will be packaged with your code: ::
-
-    include <my_package>/resources
-
-
-The documentation of the Python standard library describes how to write such a file:
-https://docs.python.org/3.4/library/logging.config.html.
-
-Example: ::
-
-    version: 1
-    formatters:
-      concise:
-        format: '%(asctime)s - %(levelname)s - %(message)s'
-      detailed:
-        format: '%(asctime)s - %(levelname)s - %(filename)s:%(lineno)3d - %(funcName)s() :: %(message)s'
-      thread_info:
-        format: '%(asctime)s - %(levelname)s - %(filename)s:%(lineno)3d - %(funcName)s() - %(thread)d:%(threadName)s :: %(message)s'
-    handlers:
-      console:
-        class: logging.StreamHandler
-        level: WARNING
-        formatter: concise
-        stream: ext://sys.stdout
-      file:
-        class: logging.handlers.RotatingFileHandler
-        filename: 'fuzzer.log'
-        maxBytes: 100000
-        backupCount: 3
-        level: DEBUG
-        formatter: detailed
-    loggers:
-      fuzzing:
-        level: DEBUG
-        handlers: [console, file]
-        propagate: no
-      fuzzing.fuzzing:
-        level: INFO
-        handlers: [console, file]
-        propagate: no
-      fuzzing.fuzzing.FuzzExecutor:
-        level: INFO
-        handlers: [file, console]
-        propagate: no
-    root:
-      level: WARNING
-      handlers: [console]
-
-
-Initialization
-++++++++++++++
-
-The ``logging`` system must be initialized before the first use. So put something like the
-following into the startup code of your application: ::
-
-    from gp_tools import LoggerFactory
-
-    def my_main():
-        lf = LoggerFactory(package_name='my_package', config_file='resources/log_config.yaml')
-        lf.initialize()
-
-
-Now you can log as you're used to it: ::
-
-    import logging
-
-    # 'my_logger' is the name as used in the configuration.
-    logger = logging.getLogger('my_logger')
-
-    logger.info('Happy Logging!')
-
-That's it :-)
-
-
-Singletons
-----------
-
-Singleton classes are characterized by the fact that there will be never more than a single instance.
-This may be useful for classes handling physical devices or any other stateful objects, e.g. caches,
-that need to be handled in a consistent way.
-
-Singletons should be used with care, because they may lead to high coupling if used in many places.
-So they may be comfortable first, but become a nightmare later on when extending or maintaining an application.
-
-Creating a singleton class using the singleton decorator is simple: ::
-
-    from gp_decorators.singleton import singleton
-
-    @singleton
-    class SomeClass(object):
-        """A singleton class."""
-        # <your code>
 
 
 
@@ -340,12 +223,197 @@ The example above can be written much faster using the class ``FuzzExecutor``: :
 
     def main():
         stats = test()
-        for k, v in stats.items():
-            print('{} = {}'.format(k, v))
+        print(stats)
+
 
 
 Getting test statistics
 +++++++++++++++++++++++
 
-The property ``FuzzExecutor.stat`` is an instance of ``collections.Counter``. It holds the number
+The property ``FuzzExecutor.stat`` is an instance of ``TestStatCounter``. It provides the number
 of successful and failed runs for each application.
+
+To combine the statistics of multiple test runs ``TestStatCounter`` implements ``__add__``: ::
+
+    // Run multiple tests yielding a set stats = set(c1, c2, c3) of stat counters
+    ...
+    // Then merge these counters to get a complete statistics of your test runs.
+    // This operation does not modify c1 to c3.
+    combined_stats = TestStatCounter(set())
+    for stat in stats:
+        combined_stats += stat
+
+
+``Status`` is an enum class providing the supported values for test status: ::
+
+    @enum.unique
+    class Status(enum.Enum):
+        """Status values for test runs."""
+        FAILED = 0
+        SUCCESS = 1
+
+
+Running tests without coding
+++++++++++++++++++++++++++++
+
+When running different sets of tests writing a script for each configuration is tedious.
+It would be nice to just write a configuration and feed it to a generic test runner.
+
+``run_fuzzer.py`` now reads a test configuration written using YAML notation. Please note that each
+process will execute ``runs`` tests. Therefore the number of executed tests is the product of ``runs`` and ``processes``.
+::
+
+    version: 1
+    seed_files: ['requirements.txt', 'README.rst']
+    applications: ['python & features/resources/testfuzz.py -p 0.3',
+                   '/Applications/Adobe Reader 9/Adobe Reader.app/Contents/MacOS/AdobeReader']
+    runs: 4
+    processors: 3
+    processes: 8
+
+If you want to run a couple of tests, just provide those configuration files and execute ``run_fuzzer.py``.
+For example: ::
+
+    $ run_fuzzer.py test_config_one_processor.yaml
+    $ run_fuzzer.py test_config_4_processors.yaml
+
+Each call to ``run_fuzzer.py`` will execute the tests as configured. It creates
+a ``ProcessPoolExecutor`` with pool size defined by the number of specified processors.
+The number of processes is (kind of) independent of the number processors;
+if there are more processes than processors, a new process will be started as soon as a processor is available.
+
+If for example 2 processors and 5 processes are specified, not more than 2 processes will run in parallel at each point in time.
+
+After executing all tests ``run_fuzzer.py`` merges the results of all processes and prints statistics like that: ::
+
+    __________________________________________________
+    Test Results:
+    __________________________________________________
+    Tests run/succeeded/failed: 32 / 25 / 7
+    AdobeReader
+        FAILED: 0
+        SUCCESS: 14
+    python
+        FAILED: 7
+        SUCCESS: 11
+
+    __________________________________________________
+
+
+Logging
+-------
+
+The Python standard library provides good logging capabilities with the module ``logging``.
+Requirements on logging depend on the application and may change during the life cycle. Therefore
+a logging system must be flexible. The ``logging`` module is highly configurable and extendable.
+
+Class ``fuzzing.LoggerFactory`` reads a YAML configuration file and initializes the logging system.
+It is just a thin layer on top of ``logging`` abstracting from the details of initialization.
+Loggers can be used as usual; the use of ``LoggerFactory`` is transparent for the loggers.
+
+Configuration file
+++++++++++++++++++
+
+``LoggerFactory`` expects to get a YAML file containing the configuration of the loggers. To deploy
+your configuration put it into a folder of your package, e.g.: ::
+
+    <my_package>
+        <my_sources>
+        <resources>
+            log_config.yaml
+        <tests>
+        <doc>
+
+Then add it to your MANIFEST.in so that it will be packaged with your code: ::
+
+    include <my_package>/resources
+
+
+The documentation of the Python standard library describes how to write such a file:
+https://docs.python.org/3.4/library/logging.config.html.
+
+Example: ::
+
+    version: 1
+    formatters:
+      concise:
+        format: '%(asctime)s - %(levelname)s - %(message)s'
+      detailed:
+        format: '%(asctime)s - %(levelname)s - %(filename)s:%(lineno)3d - %(funcName)s() :: %(message)s'
+      thread_info:
+        format: '%(asctime)s - %(levelname)s - %(filename)s:%(lineno)3d - %(funcName)s() - %(thread)d:%(threadName)s :: %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        level: WARNING
+        formatter: concise
+        stream: ext://sys.stdout
+      file:
+        class: logging.handlers.RotatingFileHandler
+        filename: 'fuzzer.log'
+        maxBytes: 100000
+        backupCount: 3
+        level: DEBUG
+        formatter: detailed
+    loggers:
+      fuzzing:
+        level: DEBUG
+        handlers: [console, file]
+        propagate: no
+      fuzzing.fuzzing:
+        level: INFO
+        handlers: [console, file]
+        propagate: no
+      fuzzing.fuzzing.FuzzExecutor:
+        level: INFO
+        handlers: [file, console]
+        propagate: no
+    root:
+      level: WARNING
+      handlers: [console]
+
+
+Initialization
+++++++++++++++
+
+The ``logging`` system must be initialized before the first use. So put something like the
+following into the startup code of your application: ::
+
+    from gp_tools import LoggerFactory
+
+    def my_main():
+        lf = LoggerFactory(package_name='my_package', config_file='resources/log_config.yaml')
+        lf.initialize()
+
+
+Now you can log as you're used to it: ::
+
+    import logging
+
+    # 'my_logger' is the name as used in the configuration.
+    logger = logging.getLogger('my_logger')
+
+    logger.info('Happy Logging!')
+
+That's it :-)
+
+
+Singletons
+----------
+
+Singleton classes are characterized by the fact that there will be never more than a single instance.
+This may be useful for classes handling physical devices or any other stateful objects, e.g. caches,
+that need to be handled in a consistent way.
+
+Singletons should be used with care, because they may lead to high coupling if used in many places.
+So they may be comfortable first, but become a nightmare later on when extending or maintaining an application.
+
+Creating a singleton class using the singleton decorator is simple: ::
+
+    from gp_decorators.singleton import singleton
+
+    @singleton
+    class SomeClass(object):
+        """A singleton class."""
+        # <your code>
+
