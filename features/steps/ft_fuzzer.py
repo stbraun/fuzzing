@@ -3,7 +3,7 @@
 
 from behave import *
 
-from fuzzing.fuzzer import fuzzer, fuzz_string, FuzzExecutor
+from fuzzing.fuzzer import fuzzer, fuzz_string, FuzzExecutor, Status
 
 
 @given("a byte array of len 10")
@@ -136,7 +136,8 @@ def step_impl(context, runs):
     """
     executor = context.fuzz_executor
     executor.run_test(runs)
-    count = __get_all_counts(executor.stats.values())
+    stats = executor.stats
+    count = stats.cumulated_counts()
     assert count == runs, "VERIFY: stats available."
 
 
@@ -148,10 +149,9 @@ def step_impl(context, runs):
     :param context: test context.
     """
     executor_ = context.fuzz_executor
-    count = __get_all_counts(executor_.stats.values())
+    stats = executor_.stats
+    count = stats.cumulated_counts()
     assert count == runs, "VERIFY: Number of recorded runs."
-    for app, count in executor_.stats.items():
-        assert count > 0, "VERIFY: at least one test must have been performed and recorded."
 
 
 @then("{runs:d} results are recorded and succeeded.")
@@ -162,9 +162,10 @@ def step_impl(context, runs):
     :param context: test context.
     """
     executor_ = context.fuzz_executor
-    count = __get_all_counts(executor_.stats.values())
+    stats = executor_.stats
+    count = stats.cumulated_counts()
     assert count == runs, "VERIFY: Number of recorded runs."
-    successful_runs = __get_counts(executor_.stats.values(), 'succeeded')
+    successful_runs = stats.cumulated_counts_for_status(Status.SUCCESS)
     assert successful_runs == runs
 
 
@@ -176,9 +177,10 @@ def step_impl(context, runs):
     :param context: test context.
     """
     executor_ = context.fuzz_executor
-    count = __get_all_counts(executor_.stats.values())
+    stats = executor_.stats
+    count = stats.cumulated_counts()
     assert count == runs, "VERIFY: Number of recorded runs."
-    failed_runs = __get_counts(executor_.stats.values(), 'failed')
+    failed_runs = stats.cumulated_counts_for_status(Status.FAILED)
     assert failed_runs == runs
 
 # ##### helpers
@@ -197,23 +199,3 @@ def number_of_modified_bytes(buf, fuzzed_buf):
         if b != fuzzed_buf[idx]:
             count += 1
     return count
-
-
-def __get_counts(counters, status):
-    """Get counts for test runs finished with given status.
-
-    :param counters: iterable holding (key: count) pairs of test runs.
-    :param status: result status. status in {'succeeded', 'failed'}
-    :type status: String
-    :return: the number of test runs finished with given status.
-    """
-    return sum([cnt[status] for cnt in counters])
-
-
-def __get_all_counts(counters):
-    """Get counts for all test runs.
-
-    :param counters: iterable holding (key: count) pairs of test runs.
-    :return: the number of test runs finished independent of status.
-    """
-    return sum([sum(cnt.values()) for cnt in counters])

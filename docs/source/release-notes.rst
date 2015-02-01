@@ -2,8 +2,22 @@
 Release Notes
 =============
 
-Release 0.2.3
--------------
+**Release 0.3.0**
+
+New features:
+
+* Run multiple tests in parallel on multiple processors. Number of processors and processes is configurable.
+* Test statistics of the processes are merged and printed.
+
+API changes:
+
+* ``FuzzExecutor.stats`` returns an instance of ``TestStatCounter``, not a simple dict anymore.
+
+You may want to look into ``TestStatCounter`` and ``Status``.
+See also ``run_fuzzer.py`` for intended usage.
+
+
+**Release 0.2.3**
 
 * Data structure for run statistics improved.
 * Tests can now be configured using a YAML file.
@@ -13,22 +27,19 @@ Release 0.2.3
 Reading the test runner script may help to get a clearer picture how to use the tool.
 
 
-Release 0.2.3a1
----------------
+**Release 0.2.3a1**
 
 Package structure simplified.
 
 
-Release 0.2.2
--------------
+**Release 0.2.2**
 
 Mainly cleanup.
 
 * Test uses pure Python test app. See ``features/resources/testfuzz.py``.
 
 
-Release 0.2.1
--------------
+**Release 0.2.1**
 
 * Class ``LoggerFactory``. Logger factory for configuration of the Python logging framework.
 
@@ -39,16 +50,14 @@ Release 0.2.1
   on the workings of wrapt.
 
 
-Release 0.2.0
--------------
+**Release 0.2.0**
 
 Improved fuzz testing.
 
 * Class ``FuzzExecutor`` makes fuzz testing of applications taking data files easy.
 
 
-Release 0.1.0
--------------
+**Release 0.1.0**
 
 First small step.
 

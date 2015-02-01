@@ -2,6 +2,23 @@
 """Fuzz testing module.
 
 A Toolbox to create fuzzers for random testing of software.
+
+Copyright (c) 2015 Stefan Braun
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
 import random
@@ -13,6 +30,7 @@ import os.path
 from tempfile import mkstemp
 import subprocess
 import logging
+import enum
 
 
 def logger():
@@ -68,6 +86,114 @@ def fuzzer(buffer, fuzz_factor=101):
     return buf
 
 
+@enum.unique
+class Status(enum.Enum):
+    """Status values for test runs."""
+    FAILED = 0
+    SUCCESS = 1
+
+
+class TestStatCounter(object):
+    """Hold a set of test results."""
+
+    def __init__(self, keys):
+        """Prepare instance for test setup.
+
+        :param keys: set of keys_.
+        :type keys: [str]
+        """
+        self.keys_ = set(keys)
+        self.stats_ = {}
+        for key in keys:
+            self.stats_[key] = Counter()
+
+    @property
+    def keys(self):
+        """Retrieve the set of keys.
+
+        :return: set of keys.
+        :rtype: set(str)
+        """
+        return deepcopy(self.keys_)
+
+    def add(self, key, status):
+        """Add a new test result to the statistics.
+
+        :param key: key of the test run. Must be in key set!
+        :type key: str
+        :param status: status of the test run.
+        :type status: Status
+        """
+        assert key in self.keys_, 'ENSURE: key is valid.'
+        self.stats_[key][status] += 1
+
+    def cumulated_counts(self):
+        """Return sum over all counters.
+
+        :return: The number of test runs; failed and successful.
+        """
+        return sum([sum(v.values()) for v in self.stats_.values()])
+
+    def cumulated_counts_for_status(self, status):
+        """Return sum over all counters for given status.
+
+        :param status: the status to summarize.
+        :type status: Status
+        :return: number of tests resulting in status.
+        """
+        return sum([v[status] for v in self.stats_.values()])
+
+    def retrieve_count(self, key, status):
+        """Return count of key / status pair.
+
+        :param key: key to retrieve count for.
+        :type key: str
+        :param status: status to retrieve count for.
+        :type status: Status
+        :return: count
+        """
+        assert key in self.keys_, 'ENSURE: key is valid.'
+        assert status in Status, 'ENSURE: status is valid.'
+        return self.stats_[key][status]
+
+    def __add__(self, other):
+        """Merge test statistics.
+
+        Does not modify the statistics, but creates and returns a new one.
+
+        :param other: test statistics to merge with self.
+        :type other: TestStatCounter
+        :return: the merged statistics.
+        :rtype: TestStatCounter
+        """
+        combined_keys = self.keys_.union(other.keys_)
+        tsc = TestStatCounter(combined_keys)
+        for key in self.stats_:
+            tsc.stats_[key].update(self.stats_[key])
+        for key in other.stats_:
+            tsc.stats_[key].update(other.stats_[key])
+        return tsc
+
+    def __repr__(self):
+        """Create printable representation.
+
+        :return: printable statistics.
+        :rtype: str
+        """
+        count_failed = self.cumulated_counts_for_status(Status.FAILED)
+        count_succeeded = self.cumulated_counts_for_status(Status.SUCCESS)
+        count_all = count_succeeded + count_failed
+        info = 'Tests run/succeeded/failed: {} / {} / {}\n'.format(count_all,
+                                                                   count_succeeded,
+                                                                   count_failed)
+        for key in self.keys_:
+            info += '{}\n'.format(key)
+            for status in Status:
+                count = self.retrieve_count(key, status)
+                info += '\t{}: {}\n'.format(status.name, count)
+        return info
+
+
 class FuzzExecutor(object):
     """Run fuzz tests on applications."""
 
@@ -82,10 +208,8 @@ class FuzzExecutor(object):
         self.apps, self.args = FuzzExecutor.__parse_app_list(app_list)
         self.file_list = file_list
         self.fuzz_factor = 251
-        self.stats_ = {}
-        for app in self.apps:
-            key = os.path.basename(app)
-            self.stats_[key] = Counter()
+        keys = [os.path.basename(app) for app in self.apps]
+        self.stats_ = TestStatCounter(keys)
 
     def run_test(self, runs):
         """Run tests and build up statistics.
@@ -104,12 +228,8 @@ class FuzzExecutor(object):
     def stats(self):
         """Retrieve statistics of last run.
 
-        The stats consist of a dictionary with
-            * key = <app-name> and
-            * value = Counter() {status: count}.
-
         :return: statistic counters.
-        :rtype: {str: Counter}
+        :rtype: TestStatCounter
         """
         return self.stats_
 
@@ -145,13 +265,13 @@ class FuzzExecutor(object):
         process = subprocess.Popen(args)
 
         time.sleep(1)
+        status = {True: Status.SUCCESS, False: Status.FAILED}
         crashed = process.poll()
-        if crashed:
-            self.stats_[app_name]['failed'] += 1
-        else:
+        result = status[crashed is None]
+        self.stats_.add(app_name, result)
+        if result is Status.SUCCESS:
+            # process did not crash, so just terminate it
             process.terminate()
-            self.stats_[app_name]['succeeded'] += 1
-        return True
 
     @staticmethod
     def __parse_app_list(app_list):

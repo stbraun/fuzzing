@@ -1,6 +1,6 @@
-==================================================================
+=========================================================
 fuzzing: tools for stress testing arbitrary applications.
-==================================================================
+=========================================================
 
 .. image:: https://travis-ci.org/stbraun/fuzzing.svg?branch=master
 
@@ -19,12 +19,11 @@ Tutorial and API documentation can be found on ReadTheDocs_.
 
 .. _ReadTheDocs: http://fuzzing.readthedocs.org/.
 
+What's new?
+-----------
 
-Currently provided:
+Now you can run your tests in multiple processes. Test results are combined and printed.
 
-  * Random testing of functions.
-  * Random testing of applications taking files.
-  * Logging configuration.
 
 Installation
 ------------
@@ -33,9 +32,9 @@ The easiest way to install is via ``easy_install`` or ``pip`` ::
 
     $ pip install fuzzing
 
-Run tests: ::
+There are feature related tests that can be run with ``behave`` and unit tests
+runnable with ``pytest`` or ``nosetest``.
 
-    $ behave
 
 Example
 -------
@@ -76,7 +75,9 @@ Example of a configuration YAML file: ::
     version: 1
     seed_files: ['requirements.txt', 'README.rst']
     applications: ['MyFunnyApp', 'AdobeReader']
-    runs: 8000
+    runs: 800
+    processors: 4
+    processes: 10
 
 Then call the test runner in a terminal session: ::
 
