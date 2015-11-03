@@ -8,7 +8,7 @@ fuzzing: tools for stress testing arbitrary applications.
 
 Stress testing of applications can be done in lots of different ways.
 This package provides an easy to use tool to stress test applications which take files
-as parameters. Editors, image viewers, and many more classes of apps come to mind.
+as parameters. Editors, image viewers, compilers, and many more classes of apps come to mind.
 
 The stress test is based on a given set of files, binary or text. Those files are taken
 randomly and some bytes are modified also randomly (fuzzing). Then the application gets
