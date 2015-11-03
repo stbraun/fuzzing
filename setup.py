@@ -30,7 +30,7 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = '0.3.0'
+version = '0.3.1'
 
 setup(name="fuzzing",
       version=version,
