@@ -2,6 +2,7 @@ language: python
 python:
   - "3.3"
   - "3.4"
+  - "3.5"
   - "pypy3"
 install:
   - "pip install -r requirements.txt"
