@@ -2,6 +2,12 @@
 Release Notes
 =============
 
+
+**Release 0.3.1**
+
+No functional changes. Only tested and released for Python 3.5.
+
+
 **Release 0.3.0**
 
 New features:
