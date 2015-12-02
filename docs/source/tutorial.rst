@@ -68,7 +68,7 @@ ASCII texts, HTML, XML, JSON and other text based formats.
 
 Example of a simple generator:
 ++++++++++++++++++++++++++++++
-Example 
+Example
 ::
 
     import fuzzing
