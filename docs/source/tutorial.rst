@@ -68,14 +68,14 @@ ASCII texts, HTML, XML, JSON and other text based formats.
 
 Example of a simple generator:
 ++++++++++++++++++++++++++++++
-
+Example 
 ::
 
-    import fuzzing.fuzzer as fuzzer
+    import fuzzing
     seed = "This could be the content of a huge text file."
     number_of_fuzzed_variants_to_generate = 10
     fuzz_factor = 7
-    fuzzed_data = fuzzer.fuzz_string(seed, number_of_fuzzed_variants_to_generate, fuzz_factor)
+    fuzzed_data = fuzzing.fuzz_string(seed, number_of_fuzzed_variants_to_generate, fuzz_factor)
     print(fuzzed_data)
 
 Of course you can also create one fuzzed variant at a time and feed it directly into the SUT.
