@@ -8,6 +8,7 @@ flake8 --output-file reports/flake8.txt --benchmark --count --statistics fuzzing
 
 nosetests --with-coverage --cover-branches --cover-inclusive --cover-html --cover-html-dir=reports/coverage --cover-xml --cover-xml-file=reports/coverage.xml tests/
 
-paver docs
-
 paver sdist
+
+cd docs
+make html
