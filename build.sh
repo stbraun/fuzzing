@@ -19,5 +19,7 @@ nosetests --with-coverage --cover-branches --cover-inclusive --with-xunit --xuni
 
 paver sdist
 
+python setup.py install
+
 cd docs
 make html
