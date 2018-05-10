@@ -92,6 +92,7 @@ def step_impl(context, len_list):
         count = number_of_modified_bytes(context.seed, fuzzed_string)
         assert count >= 0
 
+
 # ## file fuzzer
 
 
@@ -121,8 +122,10 @@ def step_impl(context):
 
     :param context: test context.
     """
-    assert context.app_list and len(context.app_list) > 0, "ENSURE: app list is provided."
-    assert context.file_list and len(context.file_list) > 0, "ENSURE: file list is provided."
+    assert context.app_list and len(
+        context.app_list) > 0, "ENSURE: app list is provided."
+    assert context.file_list and len(
+        context.file_list) > 0, "ENSURE: file list is provided."
     context.fuzz_executor = FuzzExecutor(context.app_list, context.file_list)
     assert context.fuzz_executor, "VERIFY: fuzz executor created."
 
@@ -182,6 +185,7 @@ def step_impl(context, runs):
     assert count == runs, "VERIFY: Number of recorded runs."
     failed_runs = stats.cumulated_counts_for_status(Status.FAILED)
     assert failed_runs == runs
+
 
 # ##### helpers
 

@@ -11,3 +11,5 @@ Sphinx
 behave
 setuptools
 pylint
+pytest
+zc.buildout
