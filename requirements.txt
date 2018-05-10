@@ -10,5 +10,4 @@ watchdog>=0.8.2
 Sphinx
 behave
 setuptools
-Paver
 pylint

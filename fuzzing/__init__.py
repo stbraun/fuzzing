@@ -22,9 +22,9 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
+import logging
 from .log import LoggerFactory
 from .fuzzer import fuzzer, fuzz_string, FuzzExecutor, TestStatCounter, Status
-import logging
 
 
 # Symbols available when importing with *.

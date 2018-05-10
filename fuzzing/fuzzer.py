@@ -39,8 +39,7 @@ def logger():
     :return: local logger.
     :rtype: Logger
     """
-    lg = logging.getLogger('fuzzing.fuzzer')
-    return lg
+    return logging.getLogger('fuzzing.fuzzer')
 
 
 def fuzz_string(seed_str, runs=100, fuzz_factor=50):

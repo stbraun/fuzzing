@@ -21,10 +21,13 @@ pylint --rcfile=resrc/pylintrc fuzzing > reports/pylint.txt
 nosetests --with-coverage --cover-branches --cover-inclusive --with-xunit --xunit-file=reports/nosetests.xml --cover-html --cover-html-dir=reports/coverage --cover-xml --cover-xml-file=reports/coverage.xml tests/
 
 # build source distribution tarball
-paver sdist
+python setup.py sdist
 
 # install package ...
 python setup.py install
+
+rm -rf fuzzing.egg-info
+rm dist/*.egg
 
 # ... and generate documentation
 cd docs
@@ -32,4 +35,4 @@ make html
 
 # package documentation
 cd build
-zip -r ../../dist/docs.zip html
+zip -r ../../dist/fuzzing-docs.zip html
