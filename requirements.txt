@@ -13,3 +13,4 @@ setuptools
 pylint
 pytest
 zc.buildout
+flake8

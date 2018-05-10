@@ -4,7 +4,7 @@ __author__ = 'sb'
 
 import wrapt
 
-_instances = {}
+_INSTANCES = {}
 
 
 @wrapt.decorator
@@ -15,7 +15,6 @@ def singleton(wrapped, _, args, kwargs):
     :param args: optional arguments for wrapped object.
     :param kwargs: optional arguments for wrapped object.
     """
-    global _instances
-    if wrapped not in _instances:
-        _instances[wrapped] = wrapped(*args, **kwargs)
-    return _instances[wrapped]
+    if wrapped not in _INSTANCES:
+        _INSTANCES[wrapped] = wrapped(*args, **kwargs)
+    return _INSTANCES[wrapped]
