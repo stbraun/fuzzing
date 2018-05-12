@@ -23,9 +23,13 @@ fi
 # run sanity checks
 if flake8 --output-file reports/flake8.txt --benchmark --count --statistics fuzzing gp_decorators run_fuzzer.py; then
     echo "=====================";
-    echo " sanity tests passed";
+    echo " sanity tests passed ";
     echo "=====================";
 else
+    echo "=====================";
+    echo " sanity tests failed ";
+    echo "=====================";
+
     exit 1;
 fi
 
@@ -34,24 +38,33 @@ if pylint --rcfile=resrc/pylintrc fuzzing gp_decorators run_fuzzer.py | tee repo
     echo " static analysis passed";
     echo "========================";
 else
+    echo "========================";
+    echo " static analysis failed ";
+    echo "========================";
     exit 1;
 fi
 
 # run test and measure coverage
 if nosetests --with-coverage --cover-branches --cover-inclusive --with-xunit --xunit-file=reports/nosetests.xml --cover-html --cover-html-dir=reports/coverage --cover-xml --cover-xml-file=reports/coverage.xml tests/  > reports/nosetest.txt 2>&1; then
-   echo "=================";
-   echo "unit tests passed";
-   echo "=================";
+   echo "===================";
+   echo " unit tests passed ";
+   echo "===================";
 else
+   echo "===================";
+   echo " unit tests failed ";
+   echo "===================";
    exit 1;
 fi
 
 # run behave tests
 if behave | tee reports/behave.txt; then
-   echo "=======================";
-   echo "behavioral tests passed";
-   echo "=======================";
+   echo "=========================";
+   echo " behavioral tests passed ";
+   echo "=========================";
 else
+   echo "=========================";
+   echo " behavioral tests failed ";
+   echo "=========================";
    exit 1;
 fi
 
