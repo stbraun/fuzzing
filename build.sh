@@ -11,7 +11,12 @@ echo "activate virtual environment ..."
 source venv/bin/activate
 
 # install required packages
-pip install -r requirements.txt
+pip install --upgrade pip
+if pip install -r requirements.txt; then
+    echo"requirements installed";
+else
+    exit 1;
+fi
 
 # run sanity checks
 flake8 --output-file reports/flake8.txt --benchmark --count --statistics fuzzing gp_decorators run_fuzzer.py
@@ -19,10 +24,18 @@ flake8 --output-file reports/flake8.txt --benchmark --count --statistics fuzzing
 pylint --rcfile=resrc/pylintrc fuzzing gp_decorators | tee reports/pylint.txt
 
 # run test and measure coverage
-nosetests --with-coverage --cover-branches --cover-inclusive --with-xunit --xunit-file=reports/nosetests.xml --cover-html --cover-html-dir=reports/coverage --cover-xml --cover-xml-file=reports/coverage.xml tests/
+if nosetests --with-coverage --cover-branches --cover-inclusive --with-xunit --xunit-file=reports/nosetests.xml --cover-html --cover-html-dir=reports/coverage --cover-xml --cover-xml-file=reports/coverage.xml tests/  > reports/nosetest.txt 2>&1; then
+   echo "unit tests passed";
+else
+   exit 1;
+fi
 
 # run behave tests
-behave | tee reports/behave.txt
+if behave | tee reports/behave.txt; then
+   echo "behavioral tests passed";
+else
+   exit 1;
+fi
 
 # build source distribution tarball
 python setup.py sdist
