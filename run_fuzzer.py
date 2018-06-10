@@ -77,7 +77,6 @@ def validate_config(conf_dict):
     :type conf_dict: {}
     :raise InvalidConfigurationError:
     """
-    # TASK improve validation
     if APPLICATIONS not in conf_dict.keys():
         raise InvalidConfigurationError('Missing application configuration.')
     if SEED_FILES not in conf_dict.keys():

@@ -32,8 +32,8 @@ The easiest way to install is via ``easy_install`` or ``pip`` ::
 
     $ pip install fuzzing
 
-There are feature related tests that can be run with ``behave`` and unit tests
-runnable with ``pytest`` or ``nosetest``.
+There are feature related tests that can be run with ``behave`` and a
+couple of unit tests runnable with ``pytest`` or ``nosetest``.
 
 
 Example
