@@ -5,20 +5,30 @@ A Toolbox to create fuzzers for random testing of software.
 
 Copyright (c) 2015 Stefan Braun
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to deal in the Software without restriction,
-including without limitation the rights to use, copy, modify, merge, publish, distribute,
-sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and
+associated documentation files (the "Software"), to deal in the Software
+without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to
+whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or
+The above copyright notice and this permission notice shall be included in
+all copies or
 substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
-AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR
+A PARTICULAR PURPOSE
+AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 """
 
 import random
@@ -39,8 +49,7 @@ def logger():
     :return: local logger.
     :rtype: Logger
     """
-    lg = logging.getLogger('fuzzing.fuzzer')
-    return lg
+    return logging.getLogger('fuzzing.fuzzer')
 
 
 def fuzz_string(seed_str, runs=100, fuzz_factor=50):
@@ -66,8 +75,8 @@ def fuzz_string(seed_str, runs=100, fuzz_factor=50):
 def fuzzer(buffer, fuzz_factor=101):
     """Fuzz given buffer.
 
-    Take a buffer of bytes, create a copy, and replace some bytes with random values.
-    Number of bytes to modify depends on fuzz_factor.
+    Take a buffer of bytes, create a copy, and replace some bytes
+    with random values. Number of bytes to modify depends on fuzz_factor.
     This code is taken from Charlie Miller's fuzzer code.
 
     :param buffer: the data to fuzz.
@@ -78,12 +87,22 @@ def fuzzer(buffer, fuzz_factor=101):
     :rtype: byte array
     """
     buf = deepcopy(buffer)
-    num_writes = random.randrange(math.ceil((float(len(buf)) / fuzz_factor))) + 1
+    num_writes = number_of_bytes_to_modify(len(buf), fuzz_factor)
     for _ in range(num_writes):
         random_byte = random.randrange(256)
         random_position = random.randrange(len(buf))
         buf[random_position] = random_byte
     return buf
+
+
+def number_of_bytes_to_modify(buf_len, fuzz_factor):
+    """Calculate number of bytes to modify.
+
+    :param buf_len: len of data buffer to fuzz.
+    :param fuzz_factor: degree of fuzzing.
+    :return: number of bytes to change.
+    """
+    return random.randrange(math.ceil((float(buf_len) / fuzz_factor))) + 1
 
 
 @enum.unique
@@ -183,9 +202,8 @@ class TestStatCounter(object):
         count_failed = self.cumulated_counts_for_status(Status.FAILED)
         count_succeeded = self.cumulated_counts_for_status(Status.SUCCESS)
         count_all = count_succeeded + count_failed
-        info = 'Tests run/succeeded/failed: {} / {} / {}\n'.format(count_all,
-                                                                   count_succeeded,
-                                                                   count_failed)
+        tmpl = 'Tests run/succeeded/failed: {} / {} / {}\n'
+        info = tmpl.format(count_all, count_succeeded, count_failed)
         for key in self.keys_:
             info += '{}\n'.format(key)
             for status in Status:

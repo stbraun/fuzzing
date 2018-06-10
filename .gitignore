@@ -8,3 +8,6 @@ src/
 fuzzing.log*
 .installed.cfg
 statistics
+.coverage
+.pytest_cache
+develop-eggs

@@ -5,8 +5,8 @@ Copyright 2014, Stefan Braun
 Licensed under MIT.
 """
 
-from gp_decorators import singleton
 import logging
+from gp_decorators import singleton
 
 # Symbols available when importing with *.
 __all__ = ['singleton']

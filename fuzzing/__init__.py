@@ -27,15 +27,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
+import logging
 from .log import LoggerFactory
 from .fuzzer import fuzzer, fuzz_string, FuzzExecutor, TestStatCounter, Status
-import logging
-
 
 # Symbols available when importing with *.
 __all__ = ['LoggerFactory', 'fuzzer', 'fuzz_string',
            'FuzzExecutor', 'TestStatCounter', 'Status']
-
 
 # Configure NullHandler to prevent warning in case logging is not configured.
 # See https://docs.python.org/2/howto/logging.html#library-config

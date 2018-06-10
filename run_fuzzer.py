@@ -32,7 +32,6 @@ import yaml
 
 from fuzzing import FuzzExecutor, TestStatCounter
 
-
 APPLICATIONS = 'applications'
 SEED_FILES = 'seed_files'
 PROCESSORS = 'processors'

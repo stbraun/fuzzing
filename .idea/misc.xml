@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.4.2 virtualenv at ~/Development/projects/fuzzing/venv" project-jdk-type="Python SDK" />
   <component name="PythonCompatibilityInspectionAdvertiser">
+<<<<<<< HEAD
     <option name="version" value="2" />
+=======
+    <option name="version" value="3" />
+>>>>>>> 6416dea36113f0114f3a809afb0fb74f5d979c99
   </component>
   <component name="TaskProjectConfiguration">
     <server type="YouTrack" url="http://stbraun.myjetbrains.com/youtrack" />

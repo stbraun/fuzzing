@@ -10,3 +10,7 @@ watchdog>=0.8.2
 Sphinx
 behave
 setuptools
+pylint
+pytest
+zc.buildout
+flake8

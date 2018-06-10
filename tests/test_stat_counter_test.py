@@ -114,8 +114,7 @@ class TestStatCounterTests(unittest.TestCase):
         counts = [2, 3, 4, 5]
         tsc = TestStatCounter(keys)
         self.__increment_counter(tsc, keys, counts)
-        self.assertEqual(counts[0],
-                         tsc.retrieve_count(keys[0], Status.FAILED))
+        self.assertEqual(counts[0], tsc.retrieve_count(keys[0], Status.FAILED))
         self.assertEqual(counts[1],
                          tsc.retrieve_count(keys[0], Status.SUCCESS))
 
@@ -128,8 +127,7 @@ class TestStatCounterTests(unittest.TestCase):
         :param keys: list of keys_
         :param counts: list of counts to set.
         """
-        print('Status: {}'.format(Status))
-        assert len(keys) * 2 <= len(counts)
+        self.assertTrue(len(keys) * 2 <= len(counts))
         for i, key in enumerate(keys):
             for _ in range(counts[2 * i]):
                 tsc.add(key, Status.FAILED)
