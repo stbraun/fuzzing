@@ -1,13 +1,13 @@
 # coding=utf-8
 """Test steps for feature 'fuzzer'."""
 
-from behave import *
+from behave import given, when, then
 
 from fuzzing.fuzzer import fuzzer, fuzz_string, FuzzExecutor, Status
 
 
 @given("a byte array of len 10")
-def step_impl(context):
+def step_impl01(context):
     """Prepare a byte array.
 
     :param context: test context.
@@ -16,7 +16,7 @@ def step_impl(context):
 
 
 @when("feeding it into the fuzzer, setting the fuzz_factor to 10")
-def step_impl(context):
+def step_impl02(context):
     """Execute fuzzer.
 
     :param context: test context.
@@ -25,7 +25,7 @@ def step_impl(context):
 
 
 @then("it will return a buffer with up to two modified bytes.")
-def step_impl(context):
+def step_impl03(context):
     """Check assertions.
 
     :param context: test context.
@@ -37,7 +37,7 @@ def step_impl(context):
 
 
 @when("feeding it into the fuzzer, setting the fuzz_factor to {fuzz_factor:d}")
-def step_impl(context, fuzz_factor):
+def step_impl04(context, fuzz_factor):
     """Execute fuzzer.
 
     :param fuzz_factor: specified fuzz_factor.
@@ -60,7 +60,7 @@ def step_impl(context, max_modified):
 
 
 @given("a string as seed.")
-def step_impl(context):
+def step_impl05(context):
     """Provide a string.
 
     :param context: test context.
@@ -69,7 +69,7 @@ def step_impl(context):
 
 
 @when("feeding the seed into the fuzzer, providing a count of {count:d}")
-def step_impl(context, count):
+def step_impl06(context, count):
     """Execute fuzzer.
 
     :param count: number of string variants to generate.
@@ -80,7 +80,7 @@ def step_impl(context, count):
 
 
 @then("it will return a list of {len_list:d} fuzzed variants of the seed.")
-def step_impl(context, len_list):
+def step_impl07(context, len_list):
     """Check assertions.
 
     :param len_list: expected number of variants.
@@ -97,7 +97,7 @@ def step_impl(context, len_list):
 
 
 @given("a list of file paths")
-def step_impl(context):
+def step_impl08(context):
     """Create file list.
 
     :param context: test context.
@@ -107,7 +107,7 @@ def step_impl(context):
 
 
 @given("a list of applications")
-def step_impl(context):
+def step_impl09(context):
     """Create application list.
 
     :param context: test context.
@@ -117,7 +117,7 @@ def step_impl(context):
 
 
 @given("a FuzzExecutor instance created with those lists.")
-def step_impl(context):
+def step_impl10(context):
     """Create application list.
 
     :param context: test context.
@@ -131,7 +131,7 @@ def step_impl(context):
 
 
 @when("running a test {runs:d} times")
-def step_impl(context, runs):
+def step_impl11(context, runs):
     """Execute multiple runs.
 
     :param runs: number of test runs to perform.
@@ -145,7 +145,7 @@ def step_impl(context, runs):
 
 
 @then("{runs:d} results are recorded.")
-def step_impl(context, runs):
+def step_impl12(context, runs):
     """Check called apps / files.
 
     :param runs: expected number of records.
@@ -158,7 +158,7 @@ def step_impl(context, runs):
 
 
 @then("{runs:d} results are recorded and succeeded.")
-def step_impl(context, runs):
+def step_impl13(context, runs):
     """Check called apps / files.
 
     :param runs: expected number of records.
@@ -173,7 +173,7 @@ def step_impl(context, runs):
 
 
 @then("{runs:d} results are recorded and failed.")
-def step_impl(context, runs):
+def step_impl14(context, runs):
     """Check called apps / files.
 
     :param runs: expected number of records.

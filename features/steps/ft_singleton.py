@@ -1,13 +1,13 @@
 # coding=utf-8
 """Test steps for feature 'singleton'."""
 
-from behave import *
+from behave import when, given, then
 
 from gp_decorators.singleton import singleton
 
 
 @given("two functionally identical classes, one is a singleton.")
-def step_impl(context):
+def step_impl01(context):
     """Create test classes.
     :param context: test context.
     """
@@ -16,7 +16,7 @@ def step_impl(context):
 
 
 @when("creating an instance of the non-singleton class")
-def step_impl(context):
+def step_impl02(context):
     """Put instance into context for later use.
 
     :param context: test context.
@@ -25,7 +25,7 @@ def step_impl(context):
 
 
 @when("creating an instance of the singleton class")
-def step_impl(context):
+def step_impl03(context):
     """Put instance of singleton class into context.
 
     :param context: test context.
@@ -34,7 +34,7 @@ def step_impl(context):
 
 
 @then("the functional behavior is identical.")
-def step_impl(context):
+def step_impl04(context):
     """Compare behavior of singleton vs. non-singleton.
 
     :param context: test context.
@@ -50,7 +50,7 @@ def step_impl(context):
 
 
 @given("a singleton class.")
-def step_impl(context):
+def step_impl05(context):
     """Just put singleton class into context.
 
     :param context: test context.
@@ -59,7 +59,7 @@ def step_impl(context):
 
 
 @when("creating multiple objects from the class")
-def step_impl(context):
+def step_impl06(context):
     """Prepare test for singleton property.
 
     :param context: test context.
@@ -71,7 +71,7 @@ def step_impl(context):
 
 
 @then("all will be identical.")
-def step_impl(context):
+def step_impl07(context):
     """Test for singleton property.
 
     :param context: test context.
@@ -81,7 +81,7 @@ def step_impl(context):
 
 
 @when("modifying the value of an attribute in one of them")
-def step_impl(context):
+def step_impl08(context):
     """
 
     :param context: test context.
@@ -92,7 +92,7 @@ def step_impl(context):
 
 
 @then("this modification is visible to all.")
-def step_impl(context):
+def step_impl09(context):
     """
 
     :param context: test context.
@@ -103,7 +103,7 @@ def step_impl(context):
 
 
 @then("type() shall return the class.")
-def step_impl(context):
+def step_impl10(context):
     """
 
     :param context: test context.
@@ -113,7 +113,7 @@ def step_impl(context):
 
 
 @then("__module__ shall be the module of the class.")
-def step_impl(context):
+def step_impl11(context):
     """Test for module.
 
     :param context: test context.
