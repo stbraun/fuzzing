@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+
 # prepare folder for build reports
 mkdir reports
 
