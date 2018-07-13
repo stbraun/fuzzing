@@ -72,7 +72,7 @@ check_sources() {
 
 run_tests() {
     # run test and measure coverage
-    if nosetests --cover-package=fuzzing --with-coverage --cover-branches --cover-inclusive --with-xunit --xunit-file=reports/nosetests.xml  --cover-xml --cover-xml-file=reports/coverage.xml tests/ ; then
+    if nosetests --cover-package=fuzzing --with-coverage --cover-branches --cover-inclusive --with-xunit --xunit-file=reports/nosetests.xml --cover-html --cover-html-dir=reports/coverage --cover-xml --cover-xml-file=reports/coverage.xml tests/ ; then
         echo "===================";
         echo " unit tests passed ";
         echo "===================";
