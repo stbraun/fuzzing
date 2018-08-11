@@ -34,7 +34,7 @@ class PyTest(test):
         sys.exit(pytest.main(self.test_args))
 
 
-version = '0.3.3'
+version = '0.3.4'
 
 setup(name="fuzzing",
       version=version,
@@ -49,6 +49,7 @@ setup(name="fuzzing",
           'Programming Language :: Python :: 3.4',
           'Programming Language :: Python :: 3.5',
           'Programming Language :: Python :: 3.6',
+          'Programming Language :: Python :: 3.7',
           'Programming Language :: Python :: 3 :: Only',
           'Programming Language :: Python :: Implementation :: CPython',
           'Programming Language :: Python :: Implementation :: PyPy',
