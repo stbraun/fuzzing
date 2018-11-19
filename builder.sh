@@ -72,7 +72,7 @@ check_sources() {
 
 run_tests() {
     # run test and measure coverage
-    if nosetests --cover-package=fuzzing --with-coverage --cover-branches --cover-inclusive --with-xunit --xunit-file=reports/nosetests.xml --cover-html --cover-html-dir=reports/coverage --cover-xml --cover-xml-file=reports/coverage.xml tests/ ; then
+    if pytest --junit-xml=reports/unittests.xml --doctest-modules --cov=fuzzing --cov-branch --cov-report=html:reports/coverage --cov-report=xml:reports/coverage.xml tests/ ; then
         echo "===================";
         echo " unit tests passed ";
         echo "===================";

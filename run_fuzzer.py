@@ -41,7 +41,7 @@ DEFAULT_RUNS = 10
 DEFAULT_PROCESSORS = 1
 DEFAULT_PROCESSES = 3
 
-help_configuration = """
+HELP_CONFIGURATION = """
 version: 1
 seed_files: ['requirements.txt', 'README.rst']
 applications: ['python & features/resources/testfuzz.py -p 0.5']
@@ -55,6 +55,7 @@ class InvalidConfigurationError(Exception):
     """Raised if test configuration is invalid."""
     def __init__(self, info):
         """Take info describing cause of exception."""
+        super(InvalidConfigurationError, self).__init__()
         self.info = info
 
 
@@ -64,8 +65,8 @@ def load_configuration(conf_path):
     :param conf_path: path to YAML configuration file.
     :return: configuration as dict.
     """
-    with open(conf_path) as f:
-        conf_dict = yaml.load(f)
+    with open(conf_path) as f_conf:
+        conf_dict = yaml.load(f_conf)
     validate_config(conf_dict)
     return conf_dict
 
@@ -87,7 +88,6 @@ def validate_config(conf_dict):
         conf_dict[PROCESSES] = DEFAULT_PROCESSES
     if PROCESSORS not in conf_dict.keys():
         conf_dict[PROCESSORS] = DEFAULT_PROCESSORS
-    return
 
 
 def execute_test(config):
@@ -113,7 +113,7 @@ def show_test_stats(test_stats):
     print('\n{}'.format('_' * 50))
     print('Test Results:')
     print('{}'.format('_' * 50))
-    print(test_stats),
+    print(test_stats)
     print('{}\n'.format('_' * 50))
 
 
@@ -140,7 +140,7 @@ def main():
         configuration = load_configuration(args.config_path)
     except InvalidConfigurationError:
         print("\nConfiguration is not valid.")
-        print('Example:\n{}'.format(help_configuration))
+        print('Example:\n{}'.format(HELP_CONFIGURATION))
         return 1
     print("Starting up ...")
     futures = []

@@ -68,7 +68,7 @@ def fuzz_string(seed_str, runs=100, fuzz_factor=50):
     for _ in range(runs):
         fuzzed = fuzzer(buf, fuzz_factor)
         variants.append(''.join([chr(b) for b in fuzzed]))
-    logger().info('Fuzzed strings: {}'.format(variants))
+    logger().info('Fuzzed strings: %s', variants)
     return variants
 
 
@@ -112,7 +112,7 @@ class Status(enum.Enum):
     SUCCESS = 1
 
 
-class TestStatCounter(object):
+class TestStatCounter():
     """Hold a set of test results."""
 
     def __init__(self, keys):
@@ -212,7 +212,7 @@ class TestStatCounter(object):
         return info
 
 
-class FuzzExecutor(object):
+class FuzzExecutor():
     """Run fuzz tests on applications."""
 
     def __init__(self, app_list, file_list):

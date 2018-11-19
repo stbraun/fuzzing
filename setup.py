@@ -64,7 +64,7 @@ setup(name="fuzzing",
       packages=['fuzzing'],
       include_package_data=True,
       zip_safe=False,
-      tests_require=['pytest', 'behave>=1.2.4', 'nose'],
+      tests_require=['pytest', 'behave>=1.2.4', 'pytest-cover', 'pytest-watch'],
       cmdclass={'test': PyTest},
       scripts=['run_fuzzer.py', ],
 
@@ -73,8 +73,4 @@ setup(name="fuzzing",
                         'setuptools', 'zc.buildout'],
       requires=['wrapt', 'PyYAML', 'argh', 'pathtools', 'setuptools'],
       provides=['fuzzing', 'gp_decorators'],
-      # entry_points={
-      #   'console_scripts':
-      #       ['fuzzing=fuzzing:main']
-      # }
       )

@@ -1,0 +1,410 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"dia",
+				"diagonal_sum"
+			],
+			[
+				"ma",
+				"max_len"
+			],
+			[
+				"_",
+				"_PRIMES"
+			],
+			[
+				"co",
+				"coeff_b"
+			],
+			[
+				"c",
+				"coeff_a"
+			],
+			[
+				"is",
+				"is_single_recurrence"
+			],
+			[
+				"cycle",
+				"cycle_length"
+			],
+			[
+				"num",
+				"num_digits"
+			],
+			[
+				"assert",
+				"assertTrue"
+			],
+			[
+				"divs",
+				"divisor"
+			],
+			[
+				"i",
+				"ifmain\tif __name__ == '__main__'"
+			],
+			[
+				"days",
+				"days_per_month"
+			],
+			[
+				"MA",
+				"MAR"
+			],
+			[
+				"pa",
+				"path_length"
+			],
+			[
+				"if",
+				"ifmain\tif __name__ == '__main__'"
+			],
+			[
+				"location",
+				"location_code"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "requirements.txt",
+			"settings":
+			{
+				"buffer_size": 188,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"Sublime",
+				"Preferences: SublimeLinter Key Bindings"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			],
+			[
+				"Packa",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 62.0,
+		"history":
+		[
+			"dir(sublime)",
+			"dir()",
+			"print(\"Hello!\")",
+			"ls"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Volumes/B3T/Development/projects/fuzzing"
+	],
+	"file_history":
+	[
+		"/Volumes/B3T/Development/projects/ieee_mag/ieee_mag.sublime-project",
+		"/Volumes/B3T/Development/projects/ieee_mag/Makefile",
+		"/Volumes/B3T/Development/projects/ieee_mag/test/corpus_test/prepare_test.py",
+		"/Volumes/B3T/Development/projects/ieee_mag/test/preprocessing_test/cleaning_test.py",
+		"/Volumes/B3T/Development/projects/ieee_mag/test/topics_test/topics_test.py",
+		"/Volumes/B3T/Development/projects/ieee_mag/setup.py",
+		"/Volumes/B3T/Development/projects/ieee_mag/pytest.ini",
+		"/Volumes/B3T/Development/projects/ieee_mag/requirements.txt",
+		"/Volumes/B3T/Development/projects/ieee_mag/README.md",
+		"/Volumes/B3T/Development/projects/ieee_mag/ieee_mag/preprocessing/convert_pdf.py",
+		"/Volumes/B3T/Development/projects/ieee_mag/prepare_environment.sh",
+		"/Volumes/B3T/Development/projects/ieee_mag/builder.sh",
+		"/Volumes/B3T/Development/projects/ieee_mag/ieee_mag/preprocessing/cleaning.py",
+		"/Volumes/B3T/Development/projects/ieee_mag/ieee_mag/__init__.py",
+		"/Volumes/B3T/Development/projects/ieee_mag/resrc/pylintrc",
+		"/Volumes/B3T/Development/projects/ieee_mag/ieee_mag/preprocessing/__init__.py",
+		"/Volumes/B3T/Development/projects/ieee_mag/MANIFEST.in",
+		"/Volumes/B3T/Development/projects/textanalysis/textanalysis/extractor/pdf_extractor.py",
+		"/Volumes/B3T/Development/projects/textanalysis/textanalysis/visualization/pos_graphs.py",
+		"/Volumes/B3T/Development/projects/textanalysis/textanalysis/pipeline/coroutine_pipeline.py",
+		"/Volumes/B3T/Development/projects/textanalysis/Makefile",
+		"/Volumes/B3T/Development/projects/textanalysis/builder.sh",
+		"/Users/sb/.tmuxinator/ieee_mag.yml",
+		"/Volumes/B3T/Development/projects/textanalysis/textanalysis/visualization/wordclouds.py",
+		"/Volumes/B3T/Development/projects/textanalysis/textanalysis/nlp/tokenizer_abc.py",
+		"/Volumes/B3T/Development/projects/textanalysis/textanalysis/nlp/tokenizer.py",
+		"/Volumes/B3T/Development/projects/textanalysis/textanalysis/nlp/lemmatize.py",
+		"/Volumes/B3T/Development/projects/textanalysis/textanalysis/visualization/__init__.py",
+		"/Volumes/B3T/Development/projects/textanalysis/textanalysis/nlp/pos_tags.py",
+		"/Volumes/B3T/IEEE/model/tfidf.model",
+		"/Volumes/B3T/IEEE/model/tfidf.corpus",
+		"/Volumes/B3T/Development/projects/textanalysis/textanalysis/util/file_management.py",
+		"/Volumes/B3T/Development/projects/textanalysis/requirements.txt",
+		"/Volumes/B3T/Development/projects/textanalysis/textanalysis/util/language.py",
+		"/Volumes/B3T/Development/projects/textanalysis/textanalysis/visualization/freq_distribution.py",
+		"/Volumes/B3T/Development/projects/textanalysis/test/resources/test.scriv/test.scrivx",
+		"/Users/sb/Desktop/LText.scriv/L.scrivx",
+		"/Volumes/B3T/Development/projects/textanalysis/chunks.txt",
+		"/Volumes/B3T/Development/projects/textanalysis/tags.txt",
+		"/Volumes/B3T/Development/projects/textanalysis/.gitignore",
+		"/Volumes/B3T/Development/projects/textanalysis/test/resources/test.scriv/Files/Data/3F8195F9-A036-414C-AD8C-DD92963C3ED5/notes.rtf",
+		"/Volumes/B3T/Development/projects/textanalysis/test/resources/test.scriv/Files/Data/3F8195F9-A036-414C-AD8C-DD92963C3ED5/content.rtf",
+		"/Users/sb/Desktop/LText/raw_content/0EFF8A11-8483-41EA-81CE-0942C9FD5C0E.rtf",
+		"/Volumes/B3T/Development/PlayGround/PlayPython/src/websrv/websrv.py",
+		"/Users/sb/Desktop/LText.scriv/Files/writing.history",
+		"/Users/sb/Desktop/LText.scriv/Files/binder.autosave",
+		"/Users/sb/Desktop/LText.scriv/Files/binder.backup",
+		"/Users/sb/Desktop/LText.scriv/Files/search.indexes",
+		"/Users/sb/Desktop/LText.scriv/Files/Data/1BB32977-C75D-4320-BCD7-765565AD7DE5/content.rtf",
+		"/usr/local/bin/tmuxinator",
+		"/Users/sb/Downloads/Main.hs",
+		"/Volumes/B3T/Development/buildbot/bb-master/master/projects.py",
+		"/Applications/redmine-3.3.0-1/apps/redmine/htdocs/config/configuration.yml",
+		"/Volumes/B3T/Development/projects/picdb/builder.sh",
+		"/Users/sb/.jenkins/secrets/initialAdminPassword",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/test_euler30.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler30.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler29.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler28.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/test_euler28.py",
+		"/Volumes/B3T/Development/PlayGround/PlayHaskell/HaskellCookbook/io-monad/src/Main.hs",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler27.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler/proper_divisors.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler19.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler18.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/test_euler23.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/test_predicates.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/test_primes.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/test_euler19.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler/primes.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler/predicates.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler22.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler23.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler25.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/test_euler25.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler26.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/test_euler22.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/test_euler27.py",
+		"/Users/sb/Library/Application Support/Sublime Text 3/Packages/PyCover/PyCover.sublime-settings",
+		"/Users/sb/Library/Application Support/Sublime Text 3/Packages/User/PythonBreakpoints.sublime-settings",
+		"/Users/sb/Library/Application Support/Sublime Text 3/Packages/Python Breakpoints/PythonBreakpoints.sublime-settings",
+		"/Volumes/B3T/Development/PlayGround/PlayHaskell/HaskellCookbook/data-type-with-function/src/Main.hs",
+		"/Users/sb/Library/Application Support/Sublime Text 3/Packages/Virtualenv/Virtualenv.sublime-settings",
+		"/Users/sb/.bash_profile",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/pyeuler.sublime-project",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/test_euler21.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler21.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/euler17.py",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/.gitignore",
+		"/Volumes/B3T/Development/projects/ProjectEuler/pyeuler/venv/lib/python3.6/site-packages/astroid/tests/unittest_brain.py",
+		"/Users/sb/Library/Application Support/Sublime Text 3/Packages/Virtualenv/README.md",
+		"/Users/sb/Library/Application Support/Sublime Text 3/Packages/AutoPEP8/AutoPep8.sublime-settings",
+		"/Volumes/B3T/Development/Mac/Full-Stack/ShoppingListServer/Sources/App/Setup/Config+Setup.swift",
+		"/Volumes/B3T/Development/projects/modular_python/inventoryControl/main.py",
+		"/Volumes/B3T/Development/projects/modular_python/inventoryControl/reportgenerator.py",
+		"/Volumes/B3T/Development/projects/modular_python/inventoryControl/datastorage.py",
+		"/Volumes/B3T/Development/projects/modular_python/inventoryControl/inventoryControl.sublime-project",
+		"/Volumes/B3T/Development/projects/modular_python/inventoryControl/.gitignore",
+		"/Volumes/B3T/Development/projects/modular_python/inventoryControl/userinterface.py",
+		"/Users/sb/Library/Application Support/Sublime Text 3/Packages/User/Package Control.sublime-settings"
+	],
+	"find":
+	{
+		"height": 24.0
+	},
+	"find_in_files":
+	{
+		"height": 102.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "requirements.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 188,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"SL.187.region_keys":
+							[
+							],
+							"git_gutter_is_enabled": true,
+							"git_savvy.repo_path": "/Volumes/B3T/Development/projects/fuzzing",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 37.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.exec":
+	{
+		"height": 109.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Python 3/Python3.sublime-build",
+	"project": "fuzzing.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "TENS",
+		"selected_items":
+		[
+			[
+				"TENS",
+				"test_namedtuple_simple"
+			]
+		],
+		"width": 592.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 211.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

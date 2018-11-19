@@ -11,3 +11,5 @@ statistics
 .coverage
 .pytest_cache
 develop-eggs
+
+/reports/
