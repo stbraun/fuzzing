@@ -5,7 +5,7 @@ from fuzzing.log import LoggerFactory
 
 
 def before_all(context):
-    """Setup before all tests.
+    """Set up before all tests.
 
     Initialize the logger framework.
 
@@ -14,5 +14,5 @@ def before_all(context):
     lf = LoggerFactory(config_file='../features/resources/test_config.yaml')
     lf.initialize()
     ll = lf.get_instance('environment')
-    ll.info('Logger initialized: {}'.format(lf.config))
-    ll.info('Initial test context: {}'.format(context))
+    ll.info('Logger initialized: %s', repr(lf.config))
+    ll.info('Initial test context: %s', repr(context))

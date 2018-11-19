@@ -14,7 +14,7 @@ from gp_decorators.singleton import singleton
 
 # noinspection PyArgumentList
 @singleton
-class LoggerFactory(object):
+class LoggerFactory():
     """Create and manage logger instances.
 
     It is important to initialize the logging framework before

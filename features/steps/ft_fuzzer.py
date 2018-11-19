@@ -122,10 +122,10 @@ def step_impl10(context):
 
     :param context: test context.
     """
-    assert context.app_list and len(
-        context.app_list) > 0, "ENSURE: app list is provided."
-    assert context.file_list and len(
-        context.file_list) > 0, "ENSURE: file list is provided."
+    app_list_valid = context.app_list is not None and context.app_list
+    file_list_valid = context.file_list is not None and context.file_list
+    assert app_list_valid, "ENSURE: app list is provided."
+    assert file_list_valid, "ENSURE: file list is provided."
     context.fuzz_executor = FuzzExecutor(context.app_list, context.file_list)
     assert context.fuzz_executor, "VERIFY: fuzz executor created."
 
@@ -199,7 +199,7 @@ def number_of_modified_bytes(buf, fuzzed_buf):
     :rtype: int
     """
     count = 0
-    for idx, b in enumerate(buf):
-        if b != fuzzed_buf[idx]:
+    for idx, byte in enumerate(buf):
+        if byte != fuzzed_buf[idx]:
             count += 1
     return count
