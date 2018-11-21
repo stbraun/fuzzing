@@ -20,8 +20,10 @@ class LoggerFactory():
     It is important to initialize the logging framework before
     the first call to a logger.
     """
+
     def __init__(self, package_name='fuzzing',
                  config_file='resources/log_config.yaml'):
+        """Create logger and set configuration."""
         self.package_name = package_name
         self.config_file = config_file
         self.config = None
