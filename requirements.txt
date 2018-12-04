@@ -12,3 +12,4 @@ pytest-cover
 pytest-watch
 zc.buildout
 flake8
+bumpversion

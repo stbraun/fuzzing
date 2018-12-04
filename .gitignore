@@ -13,3 +13,5 @@ statistics
 develop-eggs
 
 /reports/
+
+/fuzzing.sublime-workspace
