@@ -3,6 +3,7 @@
     <words>
       <w>braun</w>
       <w>fuzzers</w>
+      <w>testfuzz</w>
       <w>yaml</w>
     </words>
   </dictionary>

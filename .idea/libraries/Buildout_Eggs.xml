@@ -1,9 +1,6 @@
 <component name="libraryTable">
   <library name="Buildout Eggs" type="python">
-    <CLASSES>
-      <root url="file:///Volumes/B3T/Development/projects/fuzzing" />
-      <root url="file:///Volumes/B3T/Development/projects/fuzzing/venv/lib/python3.6/site-packages" />
-    </CLASSES>
+    <CLASSES />
     <SOURCES />
   </library>
 </component>
